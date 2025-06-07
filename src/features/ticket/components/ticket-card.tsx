@@ -2,12 +2,10 @@ import React from "react";
 import Link from "next/link";
 
 import clsx from "clsx";
-import {
-  LucideCircleCheckBig,
-  LucideFolderOpen,
-  LucideLoaderCircle,
-  LucideSquareArrowOutUpRight,
-} from "lucide-react";
+import { LucideSquareArrowOutUpRight } from "lucide-react";
+
+import { titleIcons } from "../constants";
+import { Ticket } from "../types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,22 +17,9 @@ import {
 } from "@/components/ui/card";
 import { ticketById } from "@/paths";
 
-type Ticket = {
-  id: string;
-  title: string;
-  content: string;
-  status: "DONE" | "OPEN" | "IN_PROGRESS";
-};
-
 type TicketCardProps = {
   ticket: Ticket;
   isDetail?: boolean;
-};
-
-const titleIcons = {
-  DONE: <LucideCircleCheckBig />,
-  OPEN: <LucideFolderOpen />,
-  IN_PROGRESS: <LucideLoaderCircle />,
 };
 
 export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
