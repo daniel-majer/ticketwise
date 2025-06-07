@@ -32,8 +32,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex h-full min-h-screen flex-col antialiased`}
       >
-        <header className="border-b border-b-zinc-200">
-          <nav className="flex flex-wrap items-center justify-between px-4 py-2 md:px-8 md:py-4">
+        <header className="">
+          <nav className="bg-background/95 fixed top-0 right-0 left-0 flex flex-wrap items-center justify-between border-b border-b-zinc-200 px-4 py-2 backdrop-blur md:px-8 md:py-4">
             <Button variant={"outline"} asChild>
               <Link href={home()} className="flex gap-x-2">
                 <LucideZap color="blue" className="size-5" />
@@ -45,7 +45,9 @@ export default function RootLayout({
             </Button>
           </nav>
         </header>
-        <main className="flex-1 px-4 py-2 md:px-8 md:py-4">{children}</main>
+        <main className="flex flex-1 flex-col px-4 pt-18 pb-2 md:px-8 md:pt-24 md:pb-4">
+          {children}
+        </main>
       </body>
     </html>
   );

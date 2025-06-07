@@ -9,7 +9,7 @@ export default function Home() {
       <Heading title="Home" description="Your home place to start" />
       <Link
         href={tickets()}
-        className="inline-block w-full md:text-lg text-center font-semibold underline"
+        className="inline-block w-full text-center font-semibold underline md:text-lg"
       >
         Go to tickets
       </Link>
