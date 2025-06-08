@@ -1,10 +1,9 @@
-import React from "react";
 import Link from "next/link";
 
 import clsx from "clsx";
 import { LucideSquareArrowOutUpRight } from "lucide-react";
 
-import { titleIcons } from "../constants";
+import { TICKET_ICONS } from "../constants";
 import { Ticket } from "../types";
 
 import { Button } from "@/components/ui/button";
@@ -35,7 +34,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
       <Card className="flex-1 rounded-md">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 truncate text-2xl">
-            {titleIcons[status]} {title}
+            {TICKET_ICONS[status]} {title}
           </CardTitle>
         </CardHeader>
         <CardContent>

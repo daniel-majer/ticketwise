@@ -4,7 +4,7 @@ import {
   LucideLoaderCircle,
 } from "lucide-react";
 
-export const titleIcons = {
+export const TICKET_ICONS = {
   DONE: <LucideCircleCheckBig />,
   OPEN: <LucideFolderOpen />,
   IN_PROGRESS: <LucideLoaderCircle />,

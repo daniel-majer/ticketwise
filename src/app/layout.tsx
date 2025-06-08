@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex h-full min-h-screen flex-col antialiased`}
       >
-        <ThemeProvider attribute={"class"}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <header>
             <Navbar />
           </header>
