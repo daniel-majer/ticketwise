@@ -1,13 +1,7 @@
-import React from "react";
-import Link from "next/link";
+import { notFound } from "next/navigation";
 
-import { LucideTriangleAlert } from "lucide-react";
-
-import Placeholder from "@/components/placeholder";
-import { Button } from "@/components/ui/button";
-import { initialState } from "@/data";
 import { TicketCard } from "@/features/ticket/components/ticket-card";
-import { tickets } from "@/paths";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
 
 type TicketProps = {
   params: {
@@ -15,23 +9,11 @@ type TicketProps = {
   };
 };
 
-const Ticket = ({ params }: TicketProps) => {
+const Ticket = async ({ params }: TicketProps) => {
   const { ticketId } = params;
+  const ticket = await getTicket(ticketId);
 
-  const ticket = initialState.find((ticket) => ticket.id === ticketId);
-
-  if (!ticket)
-    return (
-      <Placeholder
-        icon={<LucideTriangleAlert />}
-        text="Ticket not found"
-        button={
-          <Button variant={"outline"} asChild>
-            <Link href={tickets()}>Go to Tickets</Link>
-          </Button>
-        }
-      />
-    );
+  if (!ticket) notFound();
 
   return (
     <div className="w-full">

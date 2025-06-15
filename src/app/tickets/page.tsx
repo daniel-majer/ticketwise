@@ -1,16 +1,17 @@
-import { Heading } from "@/components/heading";
-import { initialState } from "@/data";
-import { TicketCard } from "@/features/ticket/components/ticket-card";
+import { Suspense } from "react";
 
-const Tickets = () => {
+import Loading from "../loading";
+
+import { Heading } from "@/components/heading";
+import TicketList from "@/components/ticket-list";
+
+const Tickets = async () => {
   return (
     <>
       <Heading title="Tickets" description="All your tickets at one place" />
-      <div className="animate-fade w-full space-y-4">
-        {initialState.map((ticket) => {
-          return <TicketCard key={ticket.id} ticket={ticket} />;
-        })}
-      </div>
+      <Suspense fallback={<Loading />}>
+        <TicketList />
+      </Suspense>
     </>
   );
 };
