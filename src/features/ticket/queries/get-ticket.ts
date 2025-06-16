@@ -1,15 +1,9 @@
-import { Ticket } from "../types";
+import { prisma } from "@/lib/prisma";
 
-import { initialState } from "@/data";
-
-export const getTicket = async (
-  ticketId: string,
-): Promise<Ticket | undefined> => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const maybeTicket = initialState.find((ticket) => ticket.id === ticketId);
-
-  return new Promise((resolve) => {
-    resolve(maybeTicket);
+export const getTicket = async (id: string) => {
+  return await prisma.ticket.findUnique({
+    where: {
+      id,
+    },
   });
 };
