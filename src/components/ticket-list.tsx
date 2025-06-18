@@ -7,7 +7,7 @@ const TicketList = async () => {
   const tickets = await getTickets();
 
   return (
-    <div className="animate-fade w-full space-y-4">
+    <div className="animate-fade w-full space-y-8">
       {tickets.map((ticket) => {
         return <TicketCard key={ticket.id} ticket={ticket} />;
       })}

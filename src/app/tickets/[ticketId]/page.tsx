@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { TicketCard } from "@/features/ticket/components/ticket-card";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
 
-type TicketProps = {
-  params: {
+type TicketPageProps = {
+  params: Promise<{
     ticketId: string;
-  };
+  }>;
 };
 
-const Ticket = async ({ params }: TicketProps) => {
+const TicketPage = async ({ params }: TicketPageProps) => {
   const { ticketId } = await params;
   const ticket = await getTicket(ticketId);
 
@@ -22,4 +22,4 @@ const Ticket = async ({ params }: TicketProps) => {
   );
 };
 
-export default Ticket;
+export default TicketPage;

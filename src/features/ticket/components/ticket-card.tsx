@@ -1,10 +1,14 @@
-"use client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import clsx from "clsx";
-import { LucideSquareArrowOutUpRight, LucideTrash2 } from "lucide-react";
+import {
+  LucidePencil,
+  LucideSquareArrowOutUpRight,
+  LucideTrash2,
+} from "lucide-react";
 
+import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { getTicket } from "../queries/get-ticket";
 import { getTickets } from "../queries/get-tickets";
@@ -17,7 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ticketById } from "@/paths";
+import { ticketById, ticketEdit } from "@/paths";
 
 type TicketCardProps = {
   ticket:
@@ -30,11 +34,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
   if (!ticket) notFound();
   const { id, title, content, status } = ticket;
 
-  const deleteHandler = () => {
-    console.log("hello");
-  };
-
-  const detailIcon = (
+  const detailButton = (
     <div className="flex flex-col justify-between">
       <Button
         size={"icon"}
@@ -42,22 +42,36 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
         className="cursor-pointer rounded-sm"
         asChild
       >
-        <Link href={ticketById(id)}>
+        <Link prefetch href={ticketById(id)}>
           <LucideSquareArrowOutUpRight />
         </Link>
       </Button>
     </div>
   );
-  const deleteIcon = (
-    <div onClick={deleteHandler} className="flex flex-col justify-between">
+  const deleteButton = (
+    <form
+      action={deleteTicket.bind(null, id)}
+      className="flex flex-col justify-between"
+    >
+      <Button
+        size={"icon"}
+        variant={"outline"}
+        className="cursor-pointer rounded-sm"
+      >
+        <LucideTrash2 />
+      </Button>
+    </form>
+  );
+  const editButton = (
+    <div className="flex flex-col justify-between">
       <Button
         size={"icon"}
         variant={"outline"}
         className="cursor-pointer rounded-sm"
         asChild
       >
-        <Link href={ticketById(id)}>
-          <LucideTrash2 />
+        <Link prefetch href={ticketEdit(id)}>
+          <LucidePencil />
         </Link>
       </Button>
     </div>
@@ -82,7 +96,20 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
           </CardDescription>
         </CardContent>
       </Card>
-      {isDetail ? deleteIcon : detailIcon}
+      <div className="flex flex-col justify-between">
+        {isDetail ? (
+          <>
+            {deleteButton}
+            {editButton}
+          </>
+        ) : (
+          <>
+            {detailButton}
+            {editButton}
+            {deleteButton}
+          </>
+        )}
+      </div>
     </div>
   );
 };
