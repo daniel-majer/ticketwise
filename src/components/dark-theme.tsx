@@ -8,8 +8,7 @@ import { LucideMoon, LucideSun } from "lucide-react";
 import { Button } from "./ui/button";
 
 const DarkTheme = () => {
-  const { theme, setTheme } = useTheme();
-  console.log(theme);
+  const { setTheme } = useTheme();
 
   return (
     <div>
