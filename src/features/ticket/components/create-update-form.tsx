@@ -1,9 +1,8 @@
 "use client";
 
-import { useActionState, useMemo } from "react";
+import { useActionState } from "react";
 
 import { Ticket } from "@prisma/client";
-import { toast } from "sonner";
 
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
@@ -11,7 +10,6 @@ import { Textarea } from "../../../components/ui/textarea";
 
 import FieldError from "@/components/form/field-error";
 import Form from "@/components/form/form";
-import { OnArgs, useToast } from "@/components/form/hooks/useToast";
 import SubmitButton from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils";
 import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
@@ -26,26 +24,8 @@ const CreateUpdateForm = ({ ticket }: CreateUpdateFormProps) => {
     EMPTY_ACTION_STATE,
   );
 
-  const options = useMemo(
-    () => ({
-      onSuccess: (onArgs: OnArgs) => {
-        if (onArgs.actionState.message) {
-          toast.success(onArgs.actionState.message);
-        }
-      },
-      onError: (onArgs: OnArgs) => {
-        if (onArgs.actionState.message) {
-          toast.error(onArgs.actionState.message);
-        }
-      },
-    }),
-    [],
-  );
-
-  useToast(actionState, options);
-
   return (
-    <Form action={action}>
+    <Form action={action} actionState={actionState}>
       <Label htmlFor="title">Title</Label>
       <Input
         type="text"

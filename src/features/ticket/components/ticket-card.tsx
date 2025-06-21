@@ -96,7 +96,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
           </CardDescription>
         </CardContent>
       </Card>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col gap-1">
         {isDetail ? (
           <>
             {deleteButton}
@@ -106,7 +106,6 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
           <>
             {detailButton}
             {editButton}
-            {deleteButton}
           </>
         )}
       </div>

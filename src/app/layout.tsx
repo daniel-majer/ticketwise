@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 import Navbar from "@/components/navbar";
+import RedirectToast from "@/components/redirect-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
           </main>
         </ThemeProvider>
         <Toaster expand />
+        <RedirectToast />
       </body>
     </html>
   );

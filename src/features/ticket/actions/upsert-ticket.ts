@@ -12,6 +12,7 @@ import {
 } from "@/components/form/utils";
 import { prisma } from "@/lib/prisma";
 import { tickets } from "@/paths";
+import { setCookieByKey } from "@/utils/cookies";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(1).max(191),
@@ -40,7 +41,10 @@ export const upsertTicket = async (
 
   revalidatePath(tickets());
 
-  if (id) redirect(tickets());
+  if (id) {
+    await setCookieByKey("toast", "Ticket updated!");
+    redirect(tickets());
+  }
 
   return toActionState("SUCCESS", "Ticket created!");
 };
