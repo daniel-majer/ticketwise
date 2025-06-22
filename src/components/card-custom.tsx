@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -11,9 +12,16 @@ type CardWrapperProps = {
   desc: string;
   className?: string;
   content: React.ReactNode;
+  footer?: React.ReactNode;
 };
 
-const CardWrapper = ({ title, desc, content, className }: CardWrapperProps) => {
+const CardWrapper = ({
+  title,
+  desc,
+  content,
+  className,
+  footer,
+}: CardWrapperProps) => {
   return (
     <Card className={className}>
       <CardHeader>
@@ -27,6 +35,11 @@ const CardWrapper = ({ title, desc, content, className }: CardWrapperProps) => {
           {content}
         </CardDescription>
       </CardContent>
+      {footer && (
+        <CardFooter className="flex items-center justify-between">
+          {footer}
+        </CardFooter>
+      )}
     </Card>
   );
 };
