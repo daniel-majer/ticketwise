@@ -13,6 +13,7 @@ import {
 import { prisma } from "@/lib/prisma";
 import { tickets } from "@/paths";
 import { setCookieByKey } from "@/utils/cookies";
+import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(1).max(191),
@@ -34,10 +35,15 @@ export const upsertTicket = async (
       deadline: formData.get("deadline"),
     });
 
+    const dbData = {
+      ...data,
+      bounty: toCent(data.bounty),
+    };
+
     await prisma.ticket.upsert({
       where: { id: id || "" },
-      update: data,
-      create: data,
+      update: dbData,
+      create: dbData,
     });
   } catch (err) {
     return toErrorState(err, formData);

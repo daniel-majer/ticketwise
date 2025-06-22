@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import clsx from "clsx";
 import {
+  LucideMoreVertical,
   LucidePencil,
   LucideSquareArrowOutUpRight,
   LucideTrash2,
@@ -12,6 +13,8 @@ import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { getTicket } from "../queries/get-ticket";
 import { getTickets } from "../queries/get-tickets";
+
+import { TicketDropdownMenu } from "./ticket-more-menu";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +26,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ticketById, ticketEdit } from "@/paths";
+import { toCurrencyFromCent } from "@/utils/currency";
 
 type TicketCardProps = {
   ticket:
@@ -78,6 +82,18 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
     </div>
   );
 
+  const moreButton = (
+    <TicketDropdownMenu
+      value={status}
+      id={id}
+      trigger={
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <LucideMoreVertical />
+        </Button>
+      }
+    />
+  );
+
   return (
     <div
       className={clsx("mx-auto flex gap-x-4", {
@@ -98,7 +114,9 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
         </CardContent>
         <CardFooter className="flex justify-between">
           <p className="text-muted-foreground text-xs">{ticket.deadline}</p>
-          <p className="text-muted-foreground text-xs">{ticket.bounty}</p>
+          <p className="text-muted-foreground text-xs">
+            {toCurrencyFromCent(ticket.bounty)}
+          </p>
         </CardFooter>
       </Card>
       <div className="flex flex-col gap-1">
@@ -106,6 +124,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
           <>
             {deleteButton}
             {editButton}
+            {moreButton}
           </>
         ) : (
           <>

@@ -9,3 +9,8 @@ export const TICKET_ICONS = {
   OPEN: <LucideFolderOpen />,
   IN_PROGRESS: <LucideLoaderCircle />,
 };
+export const TICKET_STATUS_LABELS = {
+  DONE: "Done",
+  OPEN: "Open",
+  IN_PROGRESS: "In Progress",
+};
