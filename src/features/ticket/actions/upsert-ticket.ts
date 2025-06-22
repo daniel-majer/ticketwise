@@ -17,6 +17,8 @@ import { setCookieByKey } from "@/utils/cookies";
 const upsertTicketSchema = z.object({
   title: z.string().min(1).max(191),
   content: z.string().min(1).max(1024),
+  bounty: z.coerce.number().positive(),
+  deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date is required"),
 });
 
 export const upsertTicket = async (
@@ -28,6 +30,8 @@ export const upsertTicket = async (
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),
+      bounty: formData.get("bounty"),
+      deadline: formData.get("deadline"),
     });
 
     await prisma.ticket.upsert({

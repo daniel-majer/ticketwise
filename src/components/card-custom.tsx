@@ -23,7 +23,7 @@ const CardWrapper = ({ title, desc, content, className }: CardWrapperProps) => {
         <CardDescription>{desc}</CardDescription>
       </CardHeader>
       <CardContent>
-        <CardDescription className="line-clamp-3 whitespace-break-spaces">
+        <CardDescription className="whitespace-break-spaces">
           {content}
         </CardDescription>
       </CardContent>

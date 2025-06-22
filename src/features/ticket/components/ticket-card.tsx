@@ -18,6 +18,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -95,6 +96,10 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
             {content}
           </CardDescription>
         </CardContent>
+        <CardFooter className="flex justify-between">
+          <p className="text-muted-foreground text-xs">{ticket.deadline}</p>
+          <p className="text-muted-foreground text-xs">{ticket.bounty}</p>
+        </CardFooter>
       </Card>
       <div className="flex flex-col gap-1">
         {isDetail ? (
