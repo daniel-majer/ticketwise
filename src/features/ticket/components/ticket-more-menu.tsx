@@ -6,9 +6,11 @@ import { TicketStatus } from "@prisma/client";
 import { LucideTrash2 } from "lucide-react";
 import { toast } from "sonner";
 
+import { deleteTicket } from "../actions/delete-ticket";
 import { updateTicketStatus } from "../actions/update-status";
 import { TICKET_STATUS_LABELS } from "../constants";
 
+import { useConfirmDialog } from "@/components/confirm-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +28,16 @@ type DropwdownMenuProps = {
 };
 
 export function TicketDropdownMenu({ trigger, value, id }: DropwdownMenuProps) {
+  const [dialogButton, dialog] = useConfirmDialog({
+    trigger: (
+      <DropdownMenuItem>
+        <LucideTrash2 />
+        Delete
+      </DropdownMenuItem>
+    ),
+    action: deleteTicket.bind(null, id),
+  });
+
   const handleStatusChange = async (status: string) => {
     const result = await updateTicketStatus(id, status as TicketStatus);
 
@@ -48,21 +60,18 @@ export function TicketDropdownMenu({ trigger, value, id }: DropwdownMenuProps) {
     </DropdownMenuRadioGroup>
   );
 
-  const deleteItem = (
-    <DropdownMenuItem>
-      <LucideTrash2 />
-      <span>Delete</span>
-    </DropdownMenuItem>
-  );
-
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" side="right">
-        {radioGroup}
-        <DropdownMenuSeparator />
-        {deleteItem}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {dialog}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" side="right">
+          {radioGroup}
+          <DropdownMenuSeparator />
+          {dialogButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }

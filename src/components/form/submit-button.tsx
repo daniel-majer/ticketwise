@@ -13,7 +13,7 @@ const SubmitButton = ({ label }: SubmitButtonProps) => {
   return (
     <Button
       type="submit"
-      className="w-full cursor-pointer py-5 text-white"
+      className="w-full cursor-pointer py-4 text-white"
       disabled={pending}
     >
       {pending && <LucideLoaderCircle className="mr-2 h-4 w-4 animate-spin" />}

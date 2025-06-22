@@ -6,10 +6,8 @@ import {
   LucideMoreVertical,
   LucidePencil,
   LucideSquareArrowOutUpRight,
-  LucideTrash2,
 } from "lucide-react";
 
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { getTicket } from "../queries/get-ticket";
 import { getTickets } from "../queries/get-tickets";
@@ -53,20 +51,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
       </Button>
     </div>
   );
-  const deleteButton = (
-    <form
-      action={deleteTicket.bind(null, id)}
-      className="flex flex-col justify-between"
-    >
-      <Button
-        size={"icon"}
-        variant={"outline"}
-        className="cursor-pointer rounded-sm"
-      >
-        <LucideTrash2 />
-      </Button>
-    </form>
-  );
+
   const editButton = (
     <div className="flex flex-col justify-between">
       <Button
@@ -122,7 +107,6 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
       <div className="flex flex-col gap-1">
         {isDetail ? (
           <>
-            {deleteButton}
             {editButton}
             {moreButton}
           </>
