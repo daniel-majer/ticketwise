@@ -1,12 +1,15 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 import z from "zod";
 
-import {
-  ActionState,
-  toActionState,
-  toErrorState,
-} from "@/components/form/utils";
+import { setSessionCookie } from "../cookie";
+import { hashPassword } from "../password";
+import { createSession, generateRandomSessionToken } from "../session";
+
+import { ActionState, toErrorState } from "@/components/form/utils";
+import { prisma } from "@/lib/prisma";
 
 const signUpSchema = z
   .object({
@@ -33,25 +36,26 @@ const signUpSchema = z
 
 export const signUp = async (_actionState: ActionState, formData: FormData) => {
   try {
-    const data = signUpSchema.parse(
-      Object.fromEntries(formData),
-      // username: formData.get("username"),
-      // email: formData.get("email"),
-      // password: formData.get("password"),
-      // confirmPassword: formData.get("confirmPassword"),
-    );
+    const data = signUpSchema.parse(Object.fromEntries(formData));
     console.log(data);
 
-    // await prisma.user.create({
-    //   data: {
-    //     username: data.username,
-    //     email: data.email,
-    //     password: data.password,
-    //   },
-    // });
+    const passwordHash = await hashPassword(data.password);
+
+    const user = await prisma.user.create({
+      data: {
+        username: data.username,
+        email: data.email,
+        passwordHash,
+      },
+    });
+
+    const sessionToken = generateRandomSessionToken();
+    const session = await createSession(sessionToken, user.id);
+
+    await setSessionCookie(sessionToken, session.expiresAt);
   } catch (err) {
-    return toErrorState(err);
+    return toErrorState(err, formData);
   }
 
-  return toActionState("SUCCESS", "Sign up successful!");
+  redirect("/dashboard");
 };

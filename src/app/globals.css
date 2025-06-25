@@ -11,8 +11,19 @@
       opacity: 0;
     }
     to {
-      oapcity: 1;
+      opacity: 1;
       transform: translateY(0);
+    }
+  }
+  --animate-navbar: navbar 0.5s ease-out;
+  @keyframes navbar {
+    from {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 }

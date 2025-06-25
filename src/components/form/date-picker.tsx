@@ -37,8 +37,6 @@ export function DatePicker({
     reset: () => setDate(undefined),
   }));
 
-  console.log(date);
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

@@ -3,7 +3,7 @@ const tickets = () => "/tickets";
 const ticketById = (id: string) => `/tickets/${id}`;
 const ticketEdit = (id: string) => `/tickets/${id}/edit`;
 
-const signInPath = () => "/signin";
-const signUpPath = () => "/signup";
+const signInPath = () => "/sign-in";
+const signUpPath = () => "/sign-up";
 
 export { home, signInPath, signUpPath, ticketById, ticketEdit, tickets };

@@ -14,7 +14,10 @@ export const EMPTY_ACTION_STATE: ActionState = {
   timestamp: Date.now(),
 };
 
-export const toErrorState = (err: unknown, formData?: FormData): ActionState => {
+export const toErrorState = (
+  err: unknown,
+  formData?: FormData,
+): ActionState => {
   //validation error
   if (err instanceof ZodError) {
     return {
@@ -48,10 +51,12 @@ export const toErrorState = (err: unknown, formData?: FormData): ActionState => 
 export const toActionState = (
   status: ActionState["status"],
   message: string,
+  formData?: FormData,
 ): ActionState => {
   return {
     status,
     message,
+    payload: formData,
     fieldErrors: {},
     timestamp: Date.now(),
   };

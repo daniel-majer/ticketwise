@@ -33,9 +33,7 @@ export default function RootLayout({
         className={`${inter.className} flex h-full min-h-screen flex-col antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <header>
-            <Navbar />
-          </header>
+          <Navbar />
           <main className="flex flex-1 flex-col justify-start px-4 pt-18 pb-2 md:px-8 md:pt-24 md:pb-4">
             {children}
           </main>
