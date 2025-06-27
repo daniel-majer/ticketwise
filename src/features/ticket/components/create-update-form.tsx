@@ -2,7 +2,7 @@
 
 import { useActionState, useRef } from "react";
 
-import { Ticket } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
@@ -16,7 +16,15 @@ import { EMPTY_ACTION_STATE } from "@/components/form/utils";
 import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
 
 type CreateUpdateFormProps = {
-  ticket?: Ticket;
+  ticket?: Prisma.TicketGetPayload<{
+    include: {
+      User: {
+        select: {
+          username: true;
+        };
+      };
+    };
+  }> | null;
 };
 
 const CreateUpdateForm = ({ ticket }: CreateUpdateFormProps) => {

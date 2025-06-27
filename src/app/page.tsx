@@ -1,18 +1,21 @@
-import Link from "next/link";
+import { Suspense } from "react";
+
+import Loading from "./loading";
 
 import { Heading } from "@/components/heading";
-import { tickets } from "@/paths";
+import TicketList from "@/components/ticket-list";
 
 export default function Home() {
   return (
     <div>
-      <Heading title="Home" description="Your home place to start" />
-      <Link
-        href={tickets()}
-        className="inline-block w-full text-center font-semibold underline md:text-lg"
-      >
-        Go to tickets
-      </Link>
+      <Heading
+        title="Tickets"
+        description="All tickets by everyone at one place"
+      />
+
+      <Suspense fallback={<Loading />}>
+        <TicketList />
+      </Suspense>
     </div>
   );
 }

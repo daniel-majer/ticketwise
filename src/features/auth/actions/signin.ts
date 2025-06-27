@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 
 import z from "zod";
 
-import { setSessionCookie } from "../cookie";
-import { verifyPasswordHash } from "../password";
-import { createSession, generateRandomSessionToken } from "../session";
+import { setSessionCookie } from "../queries/cookie";
+import { verifyPasswordHash } from "../queries/password";
+import { createSession, generateRandomSessionToken } from "../queries/session";
 
 import {
   ActionState,

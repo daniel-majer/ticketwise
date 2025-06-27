@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 
 import z from "zod";
 
-import { setSessionCookie } from "../cookie";
-import { hashPassword } from "../password";
-import { createSession, generateRandomSessionToken } from "../session";
+import { setSessionCookie } from "../queries/cookie";
+import { hashPassword } from "../queries/password";
+import { createSession, generateRandomSessionToken } from "../queries/session";
 
 import { ActionState, toErrorState } from "@/components/form/utils";
 import { prisma } from "@/lib/prisma";

@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 
 import { User } from "@prisma/client";
 
-import { getAuth } from "../cookie";
+import { getAuth } from "../queries/cookie";
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);

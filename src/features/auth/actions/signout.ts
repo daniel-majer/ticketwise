@@ -2,8 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { deleteSessionCookie, getAuth } from "../cookie";
-import { invalidateSession } from "../session";
+import { deleteSessionCookie, getAuth } from "../queries/cookie";
+import { invalidateSession } from "../queries/session";
 
 import { signInPath } from "@/paths";
 

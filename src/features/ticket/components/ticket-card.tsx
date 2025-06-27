@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Prisma } from "@prisma/client";
 import clsx from "clsx";
 import {
   LucideMoreVertical,
@@ -9,8 +10,6 @@ import {
 } from "lucide-react";
 
 import { TICKET_ICONS } from "../constants";
-import { getTicket } from "../queries/get-ticket";
-import { getTickets } from "../queries/get-tickets";
 
 import { TicketDropdownMenu } from "./ticket-more-menu";
 
@@ -23,17 +22,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getAuth } from "@/features/auth/queries/cookie";
+import { isOwner } from "@/features/auth/utils/isOwner";
 import { ticketById, ticketEdit } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
 type TicketCardProps = {
-  ticket:
-    | Awaited<ReturnType<typeof getTickets>>[number]
-    | Awaited<ReturnType<typeof getTicket>>;
+  ticket: Prisma.TicketGetPayload<{
+    include: {
+      User: {
+        select: {
+          username: true;
+        };
+      };
+    };
+  }>;
   isDetail?: boolean;
 };
 
-export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
+export const TicketCard = async ({
+  ticket,
+  isDetail = false,
+}: TicketCardProps) => {
+  const { user } = await getAuth();
+  const isTicketOwner = isOwner(user, ticket);
+
   if (!ticket) notFound();
   const { id, title, content, status } = ticket;
 
@@ -52,7 +65,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
     </div>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <div className="flex flex-col justify-between">
       <Button
         size={"icon"}
@@ -61,13 +74,13 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
         asChild
       >
         <Link prefetch href={ticketEdit(id)}>
-          <LucidePencil />
+          <LucidePencil /> 
         </Link>
       </Button>
     </div>
-  );
+  ) : null;
 
-  const moreButton = (
+  const moreButton = isTicketOwner ? (
     <TicketDropdownMenu
       value={status}
       id={id}
@@ -77,7 +90,7 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
         </Button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div
@@ -98,7 +111,9 @@ export const TicketCard = ({ ticket, isDetail = false }: TicketCardProps) => {
           </CardDescription>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-muted-foreground text-xs">{ticket.deadline}</p>
+          <p className="text-muted-foreground text-xs">
+            {ticket.deadline} by {ticket.User?.username}
+          </p>
           <p className="text-muted-foreground text-xs">
             {toCurrencyFromCent(ticket.bounty)}
           </p>
