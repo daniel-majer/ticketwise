@@ -48,6 +48,7 @@ export const TicketCard = async ({
   const isTicketOwner = isOwner(user, ticket);
 
   if (!ticket) notFound();
+
   const { id, title, content, status } = ticket;
 
   const detailButton = (
@@ -74,7 +75,7 @@ export const TicketCard = async ({
         asChild
       >
         <Link prefetch href={ticketEdit(id)}>
-          <LucidePencil /> 
+          <LucidePencil />
         </Link>
       </Button>
     </div>

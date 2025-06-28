@@ -6,4 +6,16 @@ const ticketEdit = (id: string) => `/tickets/${id}/edit`;
 const signInPath = () => "/sign-in";
 const signUpPath = () => "/sign-up";
 
-export { home, signInPath, signUpPath, ticketById, ticketEdit, tickets };
+const accProfilePath = () => "/account/profile";
+const accPasswordPath = () => "/account/password";
+
+export {
+  accPasswordPath,
+  accProfilePath,
+  home,
+  signInPath,
+  signUpPath,
+  ticketById,
+  ticketEdit,
+  tickets,
+};
