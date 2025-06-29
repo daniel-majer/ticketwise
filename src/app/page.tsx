@@ -1,10 +1,13 @@
 import { Suspense } from "react";
 
+import { SearchParams } from "nuqs/server";
+
 import Loading from "./loading";
 
 import { Heading } from "@/components/heading";
 import TicketList from "@/components/ticket-list";
-import { SearchParams } from "@/features/ticket/search-params";
+import { searchParamsCache } from "@/features/ticket/search-params";
+
 type TicketsProps = {
   searchParams: SearchParams;
 };
@@ -18,7 +21,7 @@ export default async function Home({ searchParams }: TicketsProps) {
       />
 
       <Suspense fallback={<Loading />}>
-        <TicketList searchParams={searchParams} />
+        <TicketList searchParams={searchParamsCache.parse(searchParams)} />
       </Suspense>
     </div>
   );
