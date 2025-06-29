@@ -7,9 +7,9 @@ import { Toaster } from "sonner";
 
 import "./globals.css";
 
-import Navbar from "@/components/navbar";
+import Navbar from "@/app/_navigation/navbar";
+import Sidebar from "@/app/_navigation/sidebar/components/sidebar";
 import RedirectToast from "@/components/redirect-toast";
-import Sidebar from "@/components/sidebar/components/sidebar";
 
 const inter = Inter({
   subsets: ["latin"],

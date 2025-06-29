@@ -4,8 +4,12 @@ import Loading from "./loading";
 
 import { Heading } from "@/components/heading";
 import TicketList from "@/components/ticket-list";
+import { SearchParams } from "@/features/ticket/search-params";
+type TicketsProps = {
+  searchParams: SearchParams;
+};
 
-export default function Home() {
+export default async function Home({ searchParams }: TicketsProps) {
   return (
     <div>
       <Heading
@@ -14,7 +18,7 @@ export default function Home() {
       />
 
       <Suspense fallback={<Loading />}>
-        <TicketList />
+        <TicketList searchParams={searchParams} />
       </Suspense>
     </div>
   );

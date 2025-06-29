@@ -95,7 +95,7 @@ export const TicketCard = async ({
 
   return (
     <div
-      className={clsx("mx-auto flex gap-x-4", {
+      className={clsx("flex w-full gap-x-4", {
         "max-w-[480px]": !isDetail,
         "max-w-[520px]": isDetail,
       })}

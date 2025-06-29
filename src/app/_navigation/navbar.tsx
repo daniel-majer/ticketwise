@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-import { LucideLogOut, LucideZap } from "lucide-react";
+import { LucideZap } from "lucide-react";
 
-import SubmitButton from "./form/submit-button";
-import { Button, buttonVariants } from "./ui/button";
-import DarkTheme from "./dark-theme";
+import DarkTheme from "../../components/dark-theme";
+import { Button, buttonVariants } from "../../components/ui/button";
 
-import { signOut } from "@/features/auth/actions/signout";
+import AccountDropdown from "./account-dropdown";
+
 import useAuth from "@/features/auth/hooks/useAuth";
 import { cn } from "@/lib/utils";
 import { home, signInPath, signUpPath } from "@/paths";
@@ -34,14 +34,7 @@ const Navbar = () => {
       Sign In
     </Link>
   );
-  const logOutButton = (
-    <form action={signOut}>
-      <SubmitButton
-        label="Sign Out"
-        icon={<LucideLogOut className="h-4 w-4" />}
-      />
-    </form>
-  );
+
   return (
     <header>
       {isFetched ? (
@@ -55,7 +48,7 @@ const Navbar = () => {
           <div className="flex items-center gap-x-2">
             <DarkTheme />
             {user ? (
-              <>{logOutButton}</>
+              <AccountDropdown user={user} />
             ) : (
               <>
                 {signUpButton}
