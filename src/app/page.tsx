@@ -9,7 +9,7 @@ import TicketList from "@/components/ticket-list";
 import { searchParamsCache } from "@/features/ticket/search-params";
 
 type TicketsProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 export default async function Home({ searchParams }: TicketsProps) {
@@ -21,7 +21,9 @@ export default async function Home({ searchParams }: TicketsProps) {
       />
 
       <Suspense fallback={<Loading />}>
-        <TicketList searchParams={searchParamsCache.parse(searchParams)} />
+        <TicketList
+          searchParams={searchParamsCache.parse(await searchParams)}
+        />
       </Suspense>
     </div>
   );

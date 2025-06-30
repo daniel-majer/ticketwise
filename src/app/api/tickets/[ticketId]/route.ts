@@ -2,9 +2,10 @@ import { getTicket } from "@/features/ticket/queries/get-ticket";
 
 export const GET = async (
   _request: Request,
-  { params }: { params: { ticketId: string } },
+  { params }: { params: Promise<{ ticketId: string }> },
 ) => {
-  const ticket = await getTicket(params.ticketId);
+  const ticketParams = await params;
+  const ticket = await getTicket(await ticketParams.ticketId);
 
   return Response.json(ticket);
 };

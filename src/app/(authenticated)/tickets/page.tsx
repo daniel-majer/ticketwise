@@ -12,7 +12,7 @@ import { CreateUpdateForm } from "@/features/ticket/components/create-update-for
 import { searchParamsCache } from "@/features/ticket/search-params";
 
 type TicketsProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 const Tickets = async ({ searchParams }: TicketsProps) => {
@@ -32,7 +32,7 @@ const Tickets = async ({ searchParams }: TicketsProps) => {
       <Suspense fallback={<Loading />}>
         <TicketList
           userId={user?.id}
-          searchParams={searchParamsCache.parse(searchParams)}
+          searchParams={searchParamsCache.parse(await searchParams)}
         />
       </Suspense>
     </>
