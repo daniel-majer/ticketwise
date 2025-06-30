@@ -18,14 +18,16 @@ const SignInForm = () => {
       <Input
         placeholder="Email"
         name="email"
-        defaultValue={actionState?.payload?.get("email") as string}
+        // defaultValue={actionState?.payload?.get("email") as string}
+        defaultValue="example@example.com"
       />
       <FieldError actionState={actionState} name="email" />
       <Input
         placeholder="Password"
         name="password"
         type="password"
-        defaultValue={actionState?.payload?.get("password") as string}
+        // defaultValue={actionState?.payload?.get("password") as string}
+        defaultValue="password"
       />
       <FieldError actionState={actionState} name="password" />
       <SubmitButton label="Sign In" />

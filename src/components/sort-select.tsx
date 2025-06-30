@@ -34,7 +34,7 @@ const SortSelect = ({ options, value, onChange }: SortSelectProps) => {
       defaultValue={value.sortKey + "_" + value.sortValue}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {options.map((opt) => {

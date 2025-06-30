@@ -48,5 +48,6 @@ export const signIn = async (_actionState: ActionState, formData: FormData) => {
     return toErrorState(err, formData);
   }
 
-  redirect("/dashboard");
+  // redirect("/dashboard");
+  redirect("/");
 };
