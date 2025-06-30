@@ -28,7 +28,7 @@ const Sidebar = () => {
     setIsOpen(open);
     setTimeout(() => setIsTransition(false), 200);
   };
-  if (!user || !isFetched) return <div className="bg-secondary/20 w-[78px]" />;
+  if (!user || !isFetched) return <div className="w-[78px]" />;
 
   return (
     <nav
