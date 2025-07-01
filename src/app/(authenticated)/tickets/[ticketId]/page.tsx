@@ -29,7 +29,7 @@ const TicketPage = async ({ params }: TicketPageProps) => {
       <Separator />
 
       <div className="w-full">
-        <TicketCard ticket={ticket} isDetail />
+        <TicketCard ticket={ticket} isDetail={true} />
       </div>
     </div>
   );
