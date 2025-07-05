@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -22,9 +23,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getAuth } from "@/features/auth/queries/cookie";
 import { isOwner } from "@/features/auth/utils/isOwner";
 import CommentList from "@/features/comment/components/comment-list";
+import { CommentWithMetadata } from "@/features/comment/types";
 import { ticketById, ticketEdit } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
@@ -39,11 +42,13 @@ type TicketCardProps = {
     };
   }>;
   isDetail?: boolean;
+  comments?: CommentWithMetadata[];
 };
 
 export const TicketCard = async ({
   ticket,
   isDetail = false,
+  comments = [],
 }: TicketCardProps) => {
   const { user } = await getAuth();
   const isTicketOwner = isOwner(user, ticket);
@@ -101,7 +106,7 @@ export const TicketCard = async ({
         "max-w-[520px]": isDetail,
       })}
     >
-      <div className="flex gap-x-4">
+      <div className="flex gap-x-2">
         <Card className="flex-1 rounded-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 truncate text-2xl">
@@ -136,7 +141,19 @@ export const TicketCard = async ({
           )}
         </div>
       </div>
-      {isDetail ? <CommentList ticketId={ticket.id} /> : null}
+      {isDetail ? (
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-y-4">
+              <Skeleton className="h-[250px] w-full" />
+              <Skeleton className="ml-8 h-[80px]" />
+              <Skeleton className="ml-8 h-[80px]" />
+            </div>
+          }
+        >
+          <CommentList ticketId={ticket.id} comments={comments} />
+        </Suspense>
+      ) : null}
     </div>
   );
 };
