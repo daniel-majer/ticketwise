@@ -11,7 +11,7 @@ type FormProps = {
   children: ReactNode;
   action: (payload: FormData) => void;
   actionState: ActionState;
-  handleSuccess?: () => void;
+  handleSuccess?: (actionState: ActionState) => void;
 };
 
 const Form = ({ children, action, actionState, handleSuccess }: FormProps) => {
@@ -21,7 +21,7 @@ const Form = ({ children, action, actionState, handleSuccess }: FormProps) => {
         if (onArgs.actionState.message) {
           toast.success(onArgs.actionState.message);
         }
-        handleSuccess?.();
+        handleSuccess?.(actionState);
       },
       onError: (onArgs: OnArgs) => {
         if (onArgs.actionState.message) {
@@ -29,7 +29,7 @@ const Form = ({ children, action, actionState, handleSuccess }: FormProps) => {
         }
       },
     }),
-    [handleSuccess],
+    [handleSuccess, actionState],
   );
 
   useToast(actionState, options);

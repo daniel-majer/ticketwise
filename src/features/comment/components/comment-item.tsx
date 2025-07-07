@@ -10,7 +10,7 @@ type CommentItemProps = {
 };
 const CommentItem = ({ comment, buttons }: CommentItemProps) => {
   return (
-    <div className="flex gap-2">
+    <div className={`flex ${buttons.length > 0 ? "gap-x-2" : ""}`}>
       <Card className="flex flex-1 gap-y-1 rounded-md p-4">
         <div className="text-muted-foreground flex justify-between text-xs">
           <p>{comment.user?.username ?? "Deleted user"}</p>

@@ -9,11 +9,13 @@ import {
   paginationParser,
   searchParser,
 } from "../search-params";
+import { TicketWithMeta } from "../types";
 
 import Pagination from "@/components/pagination";
+import { PaginatedData } from "@/types/pagination";
 
 type TicketPaginationProps = {
-  metaData: { count: number; hasNext: boolean };
+  metaData: PaginatedData<TicketWithMeta>["metadata"];
 };
 
 const TicketPagination = ({ metaData }: TicketPaginationProps) => {

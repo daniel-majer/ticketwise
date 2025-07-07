@@ -1,8 +1,8 @@
-import { Suspense } from "react";
+"use client";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Prisma } from "@prisma/client";
 import clsx from "clsx";
 import {
   LucideMoreVertical,
@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { TICKET_ICONS } from "../constants";
+import { TicketWithMeta } from "../types";
 
 import { TicketDropdownMenu } from "./ticket-more-menu";
 
@@ -23,36 +24,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getAuth } from "@/features/auth/queries/cookie";
-import { isOwner } from "@/features/auth/utils/isOwner";
-import CommentList from "@/features/comment/components/comment-list";
-import { CommentWithMetadata } from "@/features/comment/types";
 import { ticketById, ticketEdit } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 
 type TicketCardProps = {
-  ticket: Prisma.TicketGetPayload<{
-    include: {
-      User: {
-        select: {
-          username: true;
-        };
-      };
-    };
-  }>;
+  ticket: TicketWithMeta;
   isDetail?: boolean;
-  comments?: CommentWithMetadata[];
+  comments?: React.ReactNode;
 };
 
-export const TicketCard = async ({
+export const TicketCard = ({
   ticket,
   isDetail = false,
   comments = [],
 }: TicketCardProps) => {
-  const { user } = await getAuth();
-  const isTicketOwner = isOwner(user, ticket);
-
   if (!ticket) notFound();
 
   const { id, title, content, status } = ticket;
@@ -72,7 +57,7 @@ export const TicketCard = async ({
     </div>
   );
 
-  const editButton = isTicketOwner ? (
+  const editButton = ticket.isTicketOwner ? (
     <div className="flex flex-col justify-between">
       <Button
         size="icon"
@@ -87,7 +72,7 @@ export const TicketCard = async ({
     </div>
   ) : null;
 
-  const moreButton = isTicketOwner ? (
+  const moreButton = ticket.isTicketOwner ? (
     <TicketDropdownMenu
       value={status}
       id={id}
@@ -141,19 +126,10 @@ export const TicketCard = async ({
           )}
         </div>
       </div>
-      {isDetail ? (
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-y-4">
-              <Skeleton className="h-[250px] w-full" />
-              <Skeleton className="ml-8 h-[80px]" />
-              <Skeleton className="ml-8 h-[80px]" />
-            </div>
-          }
-        >
-          <CommentList ticketId={ticket.id} comments={comments} />
-        </Suspense>
-      ) : null}
+      {/* {isDetail ? (
+        <CommentList ticketId={ticket.id} comments={comments} />
+      ) : null} */}
+      {comments}
     </div>
   );
 };

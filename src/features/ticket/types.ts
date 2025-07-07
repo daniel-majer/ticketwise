@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client";
 
-export type CommentWithMetadata = Prisma.CommentGetPayload<{
+export type TicketWithMeta = Prisma.TicketGetPayload<{
   include: {
-    user: {
+    User: {
       select: {
         username: true;
       };
     };
   };
-}> & { isOwner: boolean };
+}> & { isTicketOwner: boolean };

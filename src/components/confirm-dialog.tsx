@@ -1,8 +1,17 @@
-import { cloneElement, useActionState, useState } from "react";
+import {
+  cloneElement,
+  useActionState,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
-import Form from "./form/form";
-import SubmitButton from "./form/submit-button";
+import { toast } from "sonner";
+
+import { OnArgs, useToast } from "./form/hooks/useToast";
 import { ActionState, EMPTY_ACTION_STATE } from "./form/utils";
+import { Button } from "./ui/button";
 
 import {
   AlertDialog,
@@ -16,8 +25,11 @@ import {
 } from "@/components/ui/alert-dialog";
 
 type DialogProps = {
-  trigger: React.ReactElement<{ onClick?: () => void }>;
+  trigger:
+    | React.ReactElement<{ onClick?: () => void }>
+    | ((isPending: boolean) => React.ReactElement<{ onClick?: () => void }>);
   action: () => Promise<ActionState>;
+  onSuccess?: (actionState: ActionState) => void;
   title?: string;
   description?: string;
 };
@@ -25,15 +37,57 @@ type DialogProps = {
 const useConfirmDialog = ({
   trigger,
   action,
+  onSuccess,
   title = "Are you absolutely sure?",
   description = "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
 }: DialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const dialogTrigger = cloneElement(trigger, {
-    onClick: () => setIsOpen((state) => !state),
-  });
-  const [actionState, formAction] = useActionState(action, EMPTY_ACTION_STATE);
+  const [actionState, formAction, isPending] = useActionState(
+    action,
+    EMPTY_ACTION_STATE,
+  );
+
+  const dialogTrigger = cloneElement(
+    typeof trigger === "function" ? trigger(isPending) : trigger,
+    {
+      onClick: () => setIsOpen((state) => !state),
+    },
+  );
+  const toastRef = useRef<number | string | null>(null);
+
+  useEffect(() => {
+    if (isPending) {
+      toastRef.current = toast.loading("Deleting...");
+    } else if (toastRef.current) {
+      toast.dismiss(toastRef.current);
+    }
+
+    return () => {
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current);
+      }
+    };
+  }, [isPending]);
+
+  const options = useMemo(
+    () => ({
+      onSuccess: (onArgs: OnArgs) => {
+        if (onArgs.actionState.message) {
+          toast.success(onArgs.actionState.message);
+        }
+        onSuccess?.(actionState);
+      },
+      onError: (onArgs: OnArgs) => {
+        if (onArgs.actionState.message) {
+          toast.error(onArgs.actionState.message);
+        }
+      },
+    }),
+    [actionState, onSuccess],
+  );
+
+  useToast(actionState, options);
 
   const dialog = (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,13 +99,11 @@ const useConfirmDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Form
-              action={formAction}
-              actionState={actionState}
-              handleSuccess={() => setIsOpen(false)}
-            >
-              <SubmitButton label="Confirm" />
-            </Form>
+            <form action={formAction}>
+              <Button type="submit" className="text-white">
+                Confirm
+              </Button>
+            </form>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/breadcrumbs";
 import CardWrapper from "@/components/card-custom";
 import { Separator } from "@/components/ui/separator";
-import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-redirect";
-import { isOwner } from "@/features/auth/utils/isOwner";
 import { CreateUpdateForm } from "@/features/ticket/components/create-update-form";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
 import { ticketById, tickets } from "@/paths";
@@ -16,13 +14,11 @@ type TicketEditProps = {
 
 const TicketEdit = async ({ params }: TicketEditProps) => {
   const { ticketId } = await params;
-  const { user } = await getAuthOrRedirect();
   const ticket = await getTicket(ticketId);
 
   const isTicketFound = !!ticket;
-  const isTicketOwner = isOwner(user, ticket);
 
-  if (!isTicketFound || !isTicketOwner) {
+  if (!isTicketFound || !ticket.isTicketOwner) {
     notFound();
   }
 

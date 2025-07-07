@@ -6,6 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "sonner";
 
+import ReactQueryProvider from "./_providers/providers";
+
 import "./globals.css";
 
 import Navbar from "@/app/_navigation/navbar";
@@ -36,15 +38,17 @@ export default function RootLayout({
       >
         <NuqsAdapter>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Navbar />
-            <div className="flex h-screen border-collapse overflow-x-hidden">
-              <Sidebar />
+            <ReactQueryProvider>
+              <Navbar />
+              <div className="flex h-screen border-collapse overflow-x-hidden">
+                <Sidebar />
 
-              <main className="flex min-h-screen flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pt-18 pb-2 md:px-8 md:pt-24 md:pb-4">
-                {children}
-              </main>
-            </div>
-            <Toaster expand />
+                <main className="flex min-h-screen flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pt-18 pb-2 md:px-8 md:pt-24 md:pb-4">
+                  {children}
+                </main>
+              </div>
+              <Toaster expand />
+            </ReactQueryProvider>
           </ThemeProvider>
         </NuqsAdapter>
         <RedirectToast />

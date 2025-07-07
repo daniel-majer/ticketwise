@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PaginatedData } from "@/types/pagination";
 
 type Pagination = {
   page: number;
@@ -18,13 +19,13 @@ type Pagination = {
 type PaginationProps = {
   pagination: Pagination;
   onChange: (pagination: Pagination) => void;
-  metaData: { count: number; hasNext: boolean };
+  metaData: PaginatedData<unknown>["metadata"];
 };
 
 const Pagination = ({
   pagination,
   onChange,
-  metaData: { count, hasNext },
+  metaData: { count, hasNextPage },
 }: PaginationProps) => {
   const startOffset = pagination.page * pagination.size + 1;
   const endOffset = startOffset - 1 + pagination.size;
@@ -47,7 +48,7 @@ const Pagination = ({
       variant="outline"
       size="sm"
       onClick={handleNextPage}
-      disabled={!hasNext}
+      disabled={!hasNextPage}
     >
       Next
     </Button>
