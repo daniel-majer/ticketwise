@@ -71,7 +71,7 @@ const CommentList = ({ ticketId, paginatedComments }: CommentListProps) => {
   // const handleCreateComment = (comment: CommentWithMetadata | undefined) => {
   // if (!comment) return;
   // setComments((prevComment) => [comment, ...prevComment]);
-  // };
+  // }
 
   return (
     <>
