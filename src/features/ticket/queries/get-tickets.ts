@@ -45,6 +45,6 @@ export const getTickets = async (
     list: tickets.map((ticket) => {
       return { ...ticket, isTicketOwner: isOwner(user, ticket) };
     }),
-    metaData: { count, hasNext: count > skip + take },
+    metaData: { count, hasNextPage: count > skip + take },
   };
 };
