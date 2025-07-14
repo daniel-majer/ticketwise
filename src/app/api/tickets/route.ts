@@ -15,7 +15,7 @@ export const GET = async (request: Request) => {
   //   page: 0,
   //   sortKey: "createdAt",
   //   sortValue: "desc",
-  // });
+  // })
 
   return Response.json({ list, metaData });
 };
