@@ -88,7 +88,6 @@ export const validateSession = async (sessionToken: string) => {
   if (Date.now() >= session.expiresAt.getTime() - SESSION_REFRESH_INTERVAL_MS) {
     session.expiresAt = new Date(Date.now() + SESSION_MAX_DURATION_MS);
 
-    // or your ORM of choice
     await prisma.session.update({
       where: {
         id: sessionId,

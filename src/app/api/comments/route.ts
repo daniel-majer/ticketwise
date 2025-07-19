@@ -14,7 +14,9 @@ export async function GET(request: NextRequest) {
   try {
     const comments = await getComments(ticketId, parseInt(offset || '0'));
     return NextResponse.json(comments);
-  } catch (error) {
+  } catch (e) {
+    console.log(e);
+    
     return NextResponse.json({ error: 'Failed to fetch comments' }, { status: 500 });
   }
 } 
