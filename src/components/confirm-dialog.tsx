@@ -54,6 +54,7 @@ const useConfirmDialog = ({
       onClick: () => setIsOpen((state) => !state),
     },
   );
+  
   const toastRef = useRef<number | string | null>(null);
 
   useEffect(() => {

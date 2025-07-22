@@ -14,6 +14,7 @@ import Form from "@/components/form/form";
 import SubmitButton from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils";
 import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
+import { fromCent } from "@/utils/currency";
 
 type CreateUpdateFormProps = {
   ticket?: Prisma.TicketGetPayload<{
@@ -38,6 +39,8 @@ const CreateUpdateForm = ({ ticket }: CreateUpdateFormProps) => {
   const handleSuccess = () => {
     datePickerImperativeHandle.current?.reset();
   };
+
+  console.log(ticket);
 
   return (
     <Form
@@ -86,7 +89,8 @@ const CreateUpdateForm = ({ ticket }: CreateUpdateFormProps) => {
             name="bounty"
             step=".01"
             defaultValue={
-              (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+              (actionState.payload?.get("bounty") as string) ??
+              (ticket?.bounty ? fromCent(ticket.bounty) : "")
             }
           />
           <FieldError actionState={actionState} name="bounty" />

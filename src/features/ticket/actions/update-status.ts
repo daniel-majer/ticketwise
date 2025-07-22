@@ -26,7 +26,10 @@ export const updateTicketStatus = async (id: string, status: TicketStatus) => {
     }
 
     await prisma.ticket.update({
-      where: { id },
+      where: {
+        id,
+        // userId: user.id,
+      },
       data: { status },
     });
   } catch (error) {

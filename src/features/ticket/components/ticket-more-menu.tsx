@@ -39,7 +39,14 @@ export function TicketDropdownMenu({ trigger, value, id }: DropwdownMenuProps) {
   });
 
   const handleStatusChange = async (status: string) => {
-    const result = await updateTicketStatus(id, status as TicketStatus);
+    // const result = await updateTicketStatus(id, status as TicketStatus);
+    const promise = updateTicketStatus(id, status as TicketStatus);
+
+    toast.promise(promise, {
+      loading: "Updating status...",
+    });
+
+    const result = await promise;
 
     if (result.status === "ERROR") {
       toast.error(result.message);

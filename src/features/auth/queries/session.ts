@@ -103,7 +103,7 @@ export const validateSession = async (sessionToken: string) => {
 
 /**
  * deletes a user's session when the user signs out
- * @param sessionId 
+ * @param sessionId
  */
 export const invalidateSession = async (sessionId: string) => {
   await prisma.session.delete({
