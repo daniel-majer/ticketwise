@@ -10,6 +10,7 @@ import { createSession, generateRandomSessionToken } from "../queries/session";
 
 import { ActionState, toErrorState } from "@/components/form/utils";
 import { prisma } from "@/lib/prisma";
+import { home } from "@/paths";
 
 const signUpSchema = z
   .object({
@@ -57,5 +58,5 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     return toErrorState(err, formData);
   }
 
-  redirect("/dashboard");
+  redirect(home());
 };

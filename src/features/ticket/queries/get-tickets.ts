@@ -1,6 +1,6 @@
 import { ParsedSearchParams } from "../search-params";
 
-import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-redirect";
+import { getAuth } from "@/features/auth/queries/cookie";
 import { isOwner } from "@/features/auth/utils/isOwner";
 import { prisma } from "@/lib/prisma";
 
@@ -10,7 +10,7 @@ export const getTickets = async (
 ) => {
   const params = await searchParams;
   const search = params.search;
-  const { user } = await getAuthOrRedirect();
+  const { user } = await getAuth();
 
   const where = {
     userId,

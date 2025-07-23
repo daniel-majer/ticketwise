@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import CardWrapper from "@/components/card-custom";
 import SignInForm from "@/features/auth/components/sign-in-form";
-import { signUpPath } from "@/paths";
+import { passwordForgotPath, signUpPath } from "@/paths";
 
 const SignIn = () => {
   return (
@@ -22,7 +22,7 @@ const SignIn = () => {
               Don&apos;t have an account?
             </Link>
             <Link
-              href={signUpPath()}
+              href={passwordForgotPath()}
               className="text-muted-foreground text-sm hover:underline"
             >
               Forgot Password?
