@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const users = [
-  { email: "admin@admin.com", username: "admin" },
-  { email: "example@example.com", username: "example" },
+  { email: "admin@admin.com", username: "admin", emailVerified: true },
+  { email: "example@example.com", username: "example", emailVerified: false },
 ];
 
 const tickets = [

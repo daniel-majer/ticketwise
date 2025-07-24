@@ -25,21 +25,35 @@ model Ticket {
 }
 
 model User {
-  id                  String            @id @default(cuid())
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  username            String            @unique
-  email               String            @unique
-  passwordHash        String
-  sessions            Session[]
-  tickets             Ticket[]
-  comments            Comment[]
-  TokenPassordSession PasswordSession[]
+  id                      String                   @id @default(cuid())
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  username                String                   @unique
+  email                   String                   @unique
+  emailVerified           Boolean                  @default(false)
+  emailVerificationId     String?
+  passwordHash            String
+  sessions                Session[]
+  tickets                 Ticket[]
+  comments                Comment[]
+  TokenPassordSession     PasswordSession[]
+  EmailVerificationTokens EmailVerificationToken[]
 }
 
 model PasswordSession {
   tokenHash String   @id
   expiresAt DateTime
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  code      String
+  expiresAt DateTime
+  email     String
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

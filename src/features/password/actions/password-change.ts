@@ -7,26 +7,27 @@ import {
   toActionState,
   toErrorState,
 } from "@/components/form/utils";
+import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-redirect";
+import { verifyPasswordHash } from "@/features/auth/queries/password";
 import { inngest } from "@/lib/inngest";
-import { prisma } from "@/lib/prisma";
 
 const signInSchema = z.object({
-  email: z.string().min(1, "Email is required").max(191).email(),
+  password: z.string().min(6).max(191),
 });
 
-export const passwordForgot = async (
+export const passwordChange = async (
   _actionState: ActionState,
   formData: FormData,
 ) => {
+  const { user } = await getAuthOrRedirect();
+
   try {
-    const { email } = signInSchema.parse(Object.fromEntries(formData));
+    const { password } = signInSchema.parse(Object.fromEntries(formData));
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+    const validPassword = verifyPasswordHash(user.passwordHash, password);
 
-    if (!user) {
-      return toActionState("ERROR", "Incorrect email", formData);
+    if (!validPassword) {
+      return toActionState("ERROR", "Incorrect password", formData);
     }
 
     await inngest.send({
