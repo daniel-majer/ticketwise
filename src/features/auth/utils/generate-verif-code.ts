@@ -7,7 +7,7 @@ export const generateVerificationCode = async (
   email: string,
   userId: string,
 ) => {
-  //secure always one-to-one → just last one code is valid
+  //secure always one-to-one → just last code is valid
   await prisma.emailVerificationToken.deleteMany({
     where: {
       userId,
