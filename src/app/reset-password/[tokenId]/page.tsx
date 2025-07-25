@@ -2,9 +2,9 @@ import CardWrapper from "@/components/card-custom";
 import ResetPasswordForm from "@/features/password/components/reset-password-form";
 
 type ResetPasswordProps = {
-  params: {
+  params: Promise<{
     tokenId: string;
-  };
+  }>;
 };
 
 const ResetPassword = async ({ params }: ResetPasswordProps) => {
