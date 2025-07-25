@@ -7,10 +7,11 @@ import z from "zod";
 import { setSessionCookie } from "../queries/cookie";
 import { hashPassword } from "../queries/password";
 import { createSession, generateRandomSessionToken } from "../queries/session";
+import { generateVerificationCode } from "../utils/generate-verif-code";
 
 import { ActionState, toErrorState } from "@/components/form/utils";
 import { prisma } from "@/lib/prisma";
-import { home } from "@/paths";
+import { tickets } from "@/paths";
 
 const signUpSchema = z
   .object({
@@ -37,18 +38,22 @@ const signUpSchema = z
 
 export const signUp = async (_actionState: ActionState, formData: FormData) => {
   try {
-    const data = signUpSchema.parse(Object.fromEntries(formData));
-    console.log(data);
+    const { username, email, password } = signUpSchema.parse(
+      Object.fromEntries(formData),
+    );
 
-    const passwordHash = await hashPassword(data.password);
+    const passwordHash = await hashPassword(password);
 
     const user = await prisma.user.create({
       data: {
-        username: data.username,
-        email: data.email,
+        username: username,
+        email: email,
         passwordHash,
       },
     });
+
+    const verificationCode = await generateVerificationCode(email, user.id);
+    console.log(`CODE: ${verificationCode}`);
 
     const sessionToken = generateRandomSessionToken();
     const session = await createSession(sessionToken, user.id);
@@ -58,5 +63,5 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     return toErrorState(err, formData);
   }
 
-  redirect(home());
+  redirect(tickets());
 };

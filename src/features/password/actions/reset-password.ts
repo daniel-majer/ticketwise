@@ -4,8 +4,6 @@ import { redirect } from "next/navigation";
 
 import z from "zod";
 
-import { hashToken } from "../utils";
-
 import {
   ActionState,
   toActionState,
@@ -15,6 +13,7 @@ import { hashPassword } from "@/features/auth/queries/password";
 import { prisma } from "@/lib/prisma";
 import { signInPath } from "@/paths";
 import { setCookieByKey } from "@/utils/cookies";
+import { hashToken } from "@/utils/crypto";
 
 const signUpSchema = z
   .object({
