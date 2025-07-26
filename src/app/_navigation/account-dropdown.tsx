@@ -33,13 +33,13 @@ const AccountDropdown = ({ user }: AccDropdownProps) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={accProfilePath()}>
+          <Link href={accProfilePath()} className="cursor-pointer">
             <LucideUser className="size-4" />
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={accPasswordPath()}>
+          <Link href={accPasswordPath()} className="cursor-pointer">
             <LucideUser className="size-4" />
             <span>Password</span>
           </Link>
@@ -47,8 +47,13 @@ const AccountDropdown = ({ user }: AccDropdownProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <form action={signOut}>
-            <LucideLogOut className="size-4" />
-            <button type="submit">Sign Out </button>
+            <button
+              type="submit"
+              className="flex cursor-pointer items-center gap-x-2"
+            >
+              <LucideLogOut className="size-4" />
+              Sign Out{" "}
+            </button>
           </form>
         </DropdownMenuItem>
       </DropdownMenuContent>

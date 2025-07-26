@@ -9,7 +9,7 @@ import SidebarItem from "./sidebar-item";
 
 import useAuth from "@/features/auth/hooks/useAuth";
 import { cn } from "@/lib/utils";
-import { signInPath, signUpPath } from "@/paths";
+import { emailVerificationPath, signInPath, signUpPath } from "@/paths";
 import { getActivePath } from "@/utils/get-active-path";
 
 const Sidebar = () => {
@@ -21,7 +21,7 @@ const Sidebar = () => {
   const { activeIndex } = getActivePath(
     pathName,
     navItems.map((item) => item.href),
-    [signInPath(), signUpPath()],
+    [signInPath(), signUpPath(), emailVerificationPath()],
   );
 
   const handleToggle = (open: boolean) => {

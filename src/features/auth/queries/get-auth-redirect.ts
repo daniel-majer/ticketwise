@@ -4,12 +4,19 @@ import { getAuth } from "./cookie";
 
 import { emailVerificationPath, signInPath } from "@/paths";
 
-export const getAuthOrRedirect = async () => {
+type GetAuthOrRedirectProps = {
+  checkEmailVerified: boolean;
+};
+
+export const getAuthOrRedirect = async (options?: GetAuthOrRedirectProps) => {
+  const { checkEmailVerified = true } = options ?? {};
+
   const { user } = await getAuth();
 
   if (!user) redirect(signInPath());
 
-  if (!user.emailVerified) redirect(emailVerificationPath());
+  if (checkEmailVerified && !user.emailVerified)
+    redirect(emailVerificationPath());
 
   return { user };
 };
