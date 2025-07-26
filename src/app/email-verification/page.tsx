@@ -1,4 +1,5 @@
 import CardWrapper from "@/components/card-custom";
+import EmailResendForm from "@/features/auth/components/email-resend-form";
 import EmailVerificationForm from "@/features/auth/components/email-verification-form";
 
 const EmailVerification = () => {
@@ -9,9 +10,9 @@ const EmailVerification = () => {
         title="Verify Email"
         desc="Please verify your email to continue"
         content={
-          <div>
+          <div className="space-y-2">
             <EmailVerificationForm />
-            <EmailVerificationForm />
+            <EmailResendForm />
           </div>
         }
       />

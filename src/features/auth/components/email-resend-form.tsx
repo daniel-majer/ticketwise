@@ -1,33 +1,21 @@
 "use client";
 
-import React, { useActionState } from "react";
+import { useActionState } from "react";
 
-import { emailVerification } from "../actions/email-verification";
+import { emailResend } from "../actions/email-resend";
 
-import FieldError from "@/components/form/field-error";
 import Form from "@/components/form/form";
 import SubmitButton from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils";
-import { Input } from "@/components/ui/input";
 
-const EmailVerificationForm = () => {
-  const [actionState, action] = useActionState(
-    emailVerification,
-    EMPTY_ACTION_STATE,
-  );
+const EmailResendForm = () => {
+  const [actionState, action] = useActionState(emailResend, EMPTY_ACTION_STATE);
 
   return (
     <Form action={action} actionState={actionState}>
-      <Input
-        placeholder="Code"
-        name="code"
-        // defaultValue={actionState?.payload?.get("email") as string}
-      />
-      <FieldError actionState={actionState} name="email" />
-
-      <SubmitButton label="Verify Email" />
+      <SubmitButton label="Resend Code" variant="ghost" />
     </Form>
   );
 };
 
-export default EmailVerificationForm;
+export default EmailResendForm;

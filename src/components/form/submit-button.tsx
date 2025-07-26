@@ -11,11 +11,21 @@ import { Button } from "../ui/button";
 type SubmitButtonProps = {
   label?: string;
   icon?: React.ReactElement<{ className?: string }>;
+  variant?:
+    | "secondary"
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "ghost"
+    | null
+    | undefined;
 };
-const SubmitButton = ({ label, icon }: SubmitButtonProps) => {
+const SubmitButton = ({ label, icon, variant }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
   return (
     <Button
+      variant={variant}
       type="submit"
       className="w-full cursor-pointer py-4 text-white"
       disabled={pending}
