@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { generateRandomCode } from "@/utils/crypto";
 
-const EMAIL_VERIF_TOKEN_LIFETIME_MS = 1000 * 60 * 15;
+const EMAIL_VERIFICATION_TOKEN_LIFETIME_MS = 1000 * 60 * 15;
 
 export const generateVerificationCode = async (
   email: string,
@@ -19,7 +19,7 @@ export const generateVerificationCode = async (
   await prisma.emailVerificationToken.create({
     data: {
       code,
-      expiresAt: new Date(Date.now() + EMAIL_VERIF_TOKEN_LIFETIME_MS),
+      expiresAt: new Date(Date.now() + EMAIL_VERIFICATION_TOKEN_LIFETIME_MS),
       email,
       userId,
     },

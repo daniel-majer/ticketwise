@@ -3,8 +3,6 @@ import { usePathname } from "next/navigation";
 
 import { User } from "@prisma/client";
 
-import { getAuth } from "../queries/cookie";
-
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isFetched, setIsFetched] = useState(false);
@@ -12,13 +10,15 @@ const useAuth = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { user } = await getAuth();
-      setUser(user);
+      const res = await fetch("/api/user");
+      const data = await res.json();
+      setUser(data.user);
       setIsFetched(true);
     };
 
     fetchUser();
   }, [pathname]);
+
   return { user, isFetched };
 };
 

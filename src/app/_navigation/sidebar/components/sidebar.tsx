@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -6,6 +7,7 @@ import { navItems } from "../constants";
 
 import SidebarItem from "./sidebar-item";
 
+import useAuth from "@/features/auth/hooks/useAuth";
 import { cn } from "@/lib/utils";
 import { signInPath, signUpPath } from "@/paths";
 import { getActivePath } from "@/utils/get-active-path";
@@ -13,7 +15,7 @@ import { getActivePath } from "@/utils/get-active-path";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
-  // const { user, isFetched } = useAuth();
+  const { user, isFetched } = useAuth();
   const pathName = usePathname();
 
   const { activeIndex } = getActivePath(
@@ -24,10 +26,13 @@ const Sidebar = () => {
 
   const handleToggle = (open: boolean) => {
     setIsTransition(true);
+
     setIsOpen(open);
+
     setTimeout(() => setIsTransition(false), 200);
   };
-  // if (!user || !isFetched) return <div className="w-[78px]" />;
+
+  if (!user || !isFetched) return <div className="w-[78px]" />;
 
   return (
     <nav
