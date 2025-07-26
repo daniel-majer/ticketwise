@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const users = [
   { email: "admin@admin.com", username: "admin", emailVerified: true },
-  { email: "example@example.com", username: "example", emailVerified: false },
+  { email: "example@example.com", username: "example", emailVerified: true },
 ];
 
 const tickets = [
@@ -40,10 +40,10 @@ const comments = [
 
 const seed = async () => {
   await prisma.comment.deleteMany();
+  await prisma.membership.deleteMany();
   await prisma.user.deleteMany();
   await prisma.ticket.deleteMany();
   await prisma.organization.deleteMany();
-  await prisma.membership.deleteMany();
 
   const dbOrganizations = await prisma.organization.create({
     data: { name: "Organization 1" },

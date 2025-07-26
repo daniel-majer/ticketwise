@@ -12,12 +12,14 @@ const accProfilePath = () => "/account/profile";
 const accPasswordPath = () => "/account/password";
 
 const emailVerificationPath = () => "/email-verification";
+const organizationsPath = () => "/organizations";
 
 export {
   accPasswordPath,
   accProfilePath,
   emailVerificationPath,
   home,
+  organizationsPath,
   passwordForgotPath,
   resetPasswordPath,
   signInPath,

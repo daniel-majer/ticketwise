@@ -1,8 +1,13 @@
-import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
+import {
+  LucideBook,
+  LucideCircleUser,
+  LucideFolderOpen,
+  LucideLibrary,
+} from "lucide-react";
 
 import { NavItem } from "./types";
 
-import { accProfilePath, home, tickets } from "@/paths";
+import { accProfilePath, home, organizationsPath, tickets } from "@/paths";
 
 export const navItems: NavItem[] = [
   {
@@ -20,6 +25,11 @@ export const navItems: NavItem[] = [
     icon: <LucideCircleUser />,
     href: accProfilePath(),
     separator: true,
+  },
+  {
+    title: "Organizations",
+    icon: <LucideFolderOpen />,
+    href: organizationsPath(),
   },
 ];
 

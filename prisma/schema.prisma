@@ -9,11 +9,11 @@ datasource db {
 }
 
 model Organization {
-  id         String       @id @default(cuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  name       String
-  Membership Membership[]
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  memberships Membership[]
 }
 
 model Membership {
@@ -24,8 +24,8 @@ model Membership {
   joinedAt       DateTime     @default(now())
 
   @@id([organizationId, userId])
-  @@index([organizationId])
   @@index([userId])
+  @@index([organizationId])
 }
 
 model User {
@@ -40,8 +40,8 @@ model User {
   sessions                Session[]
   tickets                 Ticket[]
   comments                Comment[]
-  TokenPassordSession     PasswordSession[]
-  EmailVerificationTokens EmailVerificationToken[]
+  tokenPassordSession     PasswordSession[]
+  emailVerificationTokens EmailVerificationToken[]
   memberships             Membership[]
 }
 
