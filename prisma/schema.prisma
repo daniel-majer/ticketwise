@@ -8,19 +8,23 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Ticket {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  title     String
-  content   String       @db.VarChar(1024)
-  status    TicketStatus @default(OPEN)
-  deadline  String
-  bounty    Int
-  User      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  comments  Comment[]
+model Organization {
+  id         String       @id @default(cuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  name       String
+  Membership Membership[]
+}
 
+model Membership {
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  joinedAt       DateTime     @default(now())
+
+  @@id([organizationId, userId])
+  @@index([organizationId])
   @@index([userId])
 }
 
@@ -38,6 +42,23 @@ model User {
   comments                Comment[]
   TokenPassordSession     PasswordSession[]
   EmailVerificationTokens EmailVerificationToken[]
+  memberships             Membership[]
+}
+
+model Ticket {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  title     String
+  content   String       @db.VarChar(1024)
+  status    TicketStatus @default(OPEN)
+  deadline  String
+  bounty    Int
+  User      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  comments  Comment[]
+
+  @@index([userId])
 }
 
 model PasswordSession {
