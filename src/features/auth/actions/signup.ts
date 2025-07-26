@@ -7,9 +7,9 @@ import z from "zod";
 import { setSessionCookie } from "../queries/cookie";
 import { hashPassword } from "../queries/password";
 import { createSession, generateRandomSessionToken } from "../queries/session";
-import { generateVerificationCode } from "../utils/generate-verif-code";
 
 import { ActionState, toErrorState } from "@/components/form/utils";
+import { inngest } from "@/lib/inngest";
 import { prisma } from "@/lib/prisma";
 import { tickets } from "@/paths";
 
@@ -46,14 +46,18 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
 
     const user = await prisma.user.create({
       data: {
-        username: username,
-        email: email,
+        username,
+        email,
         passwordHash,
       },
     });
 
-    const verificationCode = await generateVerificationCode(email, user.id);
-    console.log(`CODE: ${verificationCode}`);
+    await inngest.send({
+      name: "app/email.email-verify",
+      data: {
+        userId: user.id,
+      },
+    });
 
     const sessionToken = generateRandomSessionToken();
     const session = await createSession(sessionToken, user.id);

@@ -8,7 +8,12 @@ const EmailVerification = () => {
         className="mx-auto mb-4 flex w-full max-w-[480px] rounded-md"
         title="Verify Email"
         desc="Please verify your email to continue"
-        content={<EmailVerificationForm />}
+        content={
+          <div>
+            <EmailVerificationForm />
+            <EmailVerificationForm />
+          </div>
+        }
       />
     </>
   );

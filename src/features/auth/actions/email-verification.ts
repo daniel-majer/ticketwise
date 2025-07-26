@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 
-import { check } from "prettier";
 import z from "zod";
 
 import { setSessionCookie } from "../queries/cookie";
