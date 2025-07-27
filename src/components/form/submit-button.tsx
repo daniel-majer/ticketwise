@@ -27,7 +27,7 @@ const SubmitButton = ({ label, icon, variant }: SubmitButtonProps) => {
     <Button
       variant={variant}
       type="submit"
-      className="w-full cursor-pointer py-4 text-white"
+      className="w-full cursor-pointer text-white"
       disabled={pending}
     >
       {pending && (
@@ -40,10 +40,9 @@ const SubmitButton = ({ label, icon, variant }: SubmitButtonProps) => {
       {label}
       {pending ? null : icon ? (
         <span>
-          <span className={clsx({ "ml-2": !!label })}>
+          <span className={clsx({ "ml-2 flex": !!label })}>
             {cloneElement(icon, { className: "h-4 w-4" })}
           </span>
-          <span className="ml-2">{icon}</span>
         </span>
       ) : null}
     </Button>

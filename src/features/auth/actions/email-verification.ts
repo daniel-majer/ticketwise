@@ -24,7 +24,10 @@ export const emailVerification = async (
   _actionState: ActionState,
   formData: FormData,
 ) => {
-  const { user } = await getAuthOrRedirect({ checkEmailVerified: false });
+  const { user } = await getAuthOrRedirect({
+    checkEmailVerified: false,
+    checkOrganization: false,
+  });
 
   try {
     const { code } = signInSchema.parse(Object.fromEntries(formData));

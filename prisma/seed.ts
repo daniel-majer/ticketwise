@@ -61,6 +61,7 @@ const seed = async () => {
       //only one user is added to the organization
       organizationId: dbOrganizations.id,
       userId: dbUsers[0].id,
+      isActive: true,
     },
   });
 

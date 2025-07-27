@@ -40,8 +40,6 @@ const CreateUpdateForm = ({ ticket }: CreateUpdateFormProps) => {
     datePickerImperativeHandle.current?.reset();
   };
 
-  console.log(ticket);
-
   return (
     <Form
       action={action}

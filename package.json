@@ -31,6 +31,7 @@
     "@react-email/components": "0.3.2",
     "@tanstack/react-query": "^5.81.5",
     "@types/big.js": "^6.2.2",
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
     "big.js": "^7.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

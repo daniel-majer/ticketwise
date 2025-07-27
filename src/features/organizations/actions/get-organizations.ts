@@ -14,6 +14,9 @@ export const getOrganizations = async () => {
         },
       },
     },
+    orderBy: {
+      createdAt: "asc",
+    },
     include: {
       memberships: { where: { userId: user.id } },
       _count: {

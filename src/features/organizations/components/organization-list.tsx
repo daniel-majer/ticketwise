@@ -1,27 +1,105 @@
 import React from "react";
 
 import { format } from "date-fns";
+import {
+  LucideArrowLeftRight,
+  LucideArrowUpRightFromSquare,
+  LucidePen,
+  LucideTrash,
+} from "lucide-react";
 
 import { getOrganizations } from "../actions/get-organizations";
 
+import OrganizationSwitchButton from "./organization-switch-button";
+
+import SubmitButton from "@/components/form/submit-button";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 const OrganizationList = async () => {
-  const orgranizations = await getOrganizations();
+  const organizations = await getOrganizations();
+
+  const hasActive = organizations.some((org) => org.membershipByUser.isActive);
 
   return (
-    <div className="animate-navbar">
-      {orgranizations.map((org) => {
-        return (
-          <div key={org.id}>
-            <div>Name: {org.name}</div>
-            <div>
-              Joined At: {format(org.membershipByUser.joinedAt, "dd/MM/yyyy")}
-            </div>
-            <div>Members: {org._count.memberships}</div>
-            <div></div>
-          </div>
-        );
-      })}
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>ID</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Joined At</TableHead>
+          <TableHead>Members</TableHead>
+          <TableHead />
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {organizations.map((org) => {
+          const isActive = org.membershipByUser.isActive;
+
+          const switchButton = (
+            <OrganizationSwitchButton
+              orgId={org.id}
+              trigger={
+                <SubmitButton
+                  icon={<LucideArrowLeftRight size={16} />}
+                  label={
+                    !hasActive ? "Activate" : isActive ? "Active" : "Switch"
+                  }
+                  variant={
+                    !hasActive ? "secondary" : isActive ? "default" : "outline"
+                  }
+                />
+              }
+            />
+          );
+          const detailButton = (
+            <Button size="icon" variant="outline">
+              <LucideArrowUpRightFromSquare size={16} />
+            </Button>
+          );
+          const editButton = (
+            <Button size="icon" variant="outline">
+              <LucidePen size={16} />
+            </Button>
+          );
+          const deleteButton = (
+            <Button size="icon" variant="destructive">
+              <LucideTrash size={16} />
+            </Button>
+          );
+
+          const buttons = (
+            <>
+              {switchButton}
+              {detailButton}
+              {editButton}
+              {deleteButton}
+            </>
+          );
+
+          return (
+            <TableRow key={org.id}>
+              <TableCell>{org.id}</TableCell>
+              <TableCell>{org.name}</TableCell>
+              <TableCell>
+                {format(org.membershipByUser.joinedAt, "dd/MM/yyyy, HH:mm")}
+              </TableCell>
+              <TableCell>{org._count.memberships}</TableCell>
+              <TableCell className="flex justify-end gap-x-2">
+                {buttons}
+              </TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 

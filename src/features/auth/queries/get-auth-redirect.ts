@@ -2,14 +2,16 @@ import { redirect } from "next/navigation";
 
 import { getAuth } from "./cookie";
 
-import { emailVerificationPath, signInPath } from "@/paths";
+import { getOrganizations } from "@/features/organizations/actions/get-organizations";
+import { emailVerificationPath, onboardingPath, signInPath } from "@/paths";
 
 type GetAuthOrRedirectProps = {
-  checkEmailVerified: boolean;
+  checkEmailVerified?: boolean;
+  checkOrganization?: boolean;
 };
 
 export const getAuthOrRedirect = async (options?: GetAuthOrRedirectProps) => {
-  const { checkEmailVerified = true } = options ?? {};
+  const { checkEmailVerified = true, checkOrganization = true } = options ?? {};
 
   const { user } = await getAuth();
 
@@ -17,6 +19,11 @@ export const getAuthOrRedirect = async (options?: GetAuthOrRedirectProps) => {
 
   if (checkEmailVerified && !user.emailVerified)
     redirect(emailVerificationPath());
+
+  if (checkOrganization) {
+    const orgs = await getOrganizations();
+    if (!orgs.length) redirect(onboardingPath());
+  }
 
   return { user };
 };

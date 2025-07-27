@@ -8,7 +8,10 @@ import { toActionState, toErrorState } from "@/components/form/utils";
 import { prisma } from "@/lib/prisma";
 
 export const emailResend = async () => {
-  const { user } = await getAuthOrRedirect({ checkEmailVerified: false });
+  const { user } = await getAuthOrRedirect({
+    checkEmailVerified: false,
+    checkOrganization: false,
+  });
 
   try {
     await prisma.emailVerificationToken.deleteMany({
