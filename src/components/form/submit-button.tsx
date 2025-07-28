@@ -3,7 +3,6 @@
 import React, { cloneElement } from "react";
 import { useFormStatus } from "react-dom";
 
-import clsx from "clsx";
 import { LucideLoaderCircle } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -30,21 +29,12 @@ const SubmitButton = ({ label, icon, variant }: SubmitButtonProps) => {
       className="w-full cursor-pointer text-white"
       disabled={pending}
     >
-      {pending && (
-        <LucideLoaderCircle
-          className={clsx("h-4 w-4 animate-spin", {
-            "mr-2": !!label,
-          })}
-        />
-      )}
-      {label}
-      {pending ? null : icon ? (
-        <span>
-          <span className={clsx({ "ml-2 flex": !!label })}>
-            {cloneElement(icon, { className: "h-4 w-4" })}
-          </span>
-        </span>
+      {pending ? (
+        <LucideLoaderCircle className="h-4 w-4 animate-spin" />
+      ) : icon ? (
+        <>{cloneElement(icon, { className: "h-4 w-4" })}</>
       ) : null}
+      {label}
     </Button>
   );
 };

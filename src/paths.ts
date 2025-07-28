@@ -15,6 +15,8 @@ const emailVerificationPath = () => "/email-verification";
 const organizationsPath = () => "/organizations";
 const organizationCreatePath = () => "/organizations/create";
 const onboardingPath = () => "/onboarding";
+const selectActiveOrganizationPath = () =>
+  "/onboarding/select-active-organization";
 
 export {
   accPasswordPath,
@@ -26,6 +28,7 @@ export {
   organizationsPath,
   passwordForgotPath,
   resetPasswordPath,
+  selectActiveOrganizationPath,
   signInPath,
   signUpPath,
   ticketById,

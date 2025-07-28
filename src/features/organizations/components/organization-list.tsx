@@ -1,15 +1,13 @@
-import React from "react";
-
 import { format } from "date-fns";
 import {
   LucideArrowLeftRight,
   LucideArrowUpRightFromSquare,
   LucidePen,
-  LucideTrash,
 } from "lucide-react";
 
 import { getOrganizations } from "../actions/get-organizations";
 
+import OrganizationDeleteButton from "./organization-delete-button";
 import OrganizationSwitchButton from "./organization-switch-button";
 
 import SubmitButton from "@/components/form/submit-button";
@@ -23,7 +21,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const OrganizationList = async () => {
+type OrganizationListProps = {
+  limitedAccess?: boolean;
+};
+
+const OrganizationList = async ({ limitedAccess }: OrganizationListProps) => {
   const organizations = await getOrganizations();
 
   const hasActive = organizations.some((org) => org.membershipByUser.isActive);
@@ -69,18 +71,14 @@ const OrganizationList = async () => {
               <LucidePen size={16} />
             </Button>
           );
-          const deleteButton = (
-            <Button size="icon" variant="destructive">
-              <LucideTrash size={16} />
-            </Button>
-          );
+          const deleteButton = <OrganizationDeleteButton orgId={org.id} />;
 
           const buttons = (
             <>
               {switchButton}
-              {detailButton}
-              {editButton}
-              {deleteButton}
+              {limitedAccess ? null : detailButton}
+              {limitedAccess ? null : editButton}
+              {limitedAccess ? null : deleteButton}
             </>
           );
 

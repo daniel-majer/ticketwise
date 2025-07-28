@@ -2,7 +2,7 @@
 
 import React, { useActionState } from "react";
 
-import { createOrganization } from "../actions/createOrganization";
+import { createOrganization } from "../actions/create-organization";
 
 import FieldError from "@/components/form/field-error";
 import Form from "@/components/form/form";

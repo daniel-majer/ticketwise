@@ -2,7 +2,7 @@
 
 import React, { useActionState } from "react";
 
-import { switchOrganization } from "../actions/switchOrganization";
+import { switchOrganization } from "../actions/switch-organization";
 
 import Form from "@/components/form/form";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils";
