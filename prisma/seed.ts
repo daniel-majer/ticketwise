@@ -55,14 +55,21 @@ const seed = async () => {
     data: users.map((user) => ({ ...user, passwordHash })),
   });
 
-  await prisma.membership.create({
-    data: {
-      //for debugging purposes
-      //only one user is added to the organization
-      organizationId: dbOrganizations.id,
-      userId: dbUsers[0].id,
-      isActive: true,
-    },
+  await prisma.membership.createMany({
+    data: [
+      {
+        //for debugging purposes
+        //only one user is added to the organization
+        organizationId: dbOrganizations.id,
+        userId: dbUsers[0].id,
+        isActive: true,
+      },
+      {
+        organizationId: dbOrganizations.id,
+        userId: dbUsers[1].id,
+        isActive: false,
+      },
+    ],
   });
 
   const dbTickets = await prisma.ticket.createManyAndReturn({

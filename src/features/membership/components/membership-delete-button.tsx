@@ -2,28 +2,32 @@
 
 import { useRouter } from "next/navigation";
 
-import { LucideLoaderCircle, LucideTrash } from "lucide-react";
+import { LucideLoaderCircle, LucideLogOut } from "lucide-react";
 
-import { deleteOrganization } from "../actions/delete-organization";
+import { membershipOrganization } from "../actions/delete-membership";
 
 import { useConfirmDialog } from "@/components/confirm-dialog";
 import { Button } from "@/components/ui/button";
 
 type OrganizationDeleteButtonProps = {
   orgId: string;
+  userId: string;
 };
 
-const OrganizationDeleteButton = ({ orgId }: OrganizationDeleteButtonProps) => {
+const MembershipDeleteButton = ({
+  orgId,
+  userId,
+}: OrganizationDeleteButtonProps) => {
   const router = useRouter();
 
   const [deleteButton, deleteDialog] = useConfirmDialog({
-    action: deleteOrganization.bind(null, orgId),
+    action: membershipOrganization.bind(null, orgId, userId),
     trigger: (isPending) => (
       <Button size="icon" variant="destructive" className="cursor-pointer">
         {isPending ? (
           <LucideLoaderCircle size={16} className="animate-spin" />
         ) : (
-          <LucideTrash size={16} />
+          <LucideLogOut size={16} />
         )}
       </Button>
     ),
@@ -40,4 +44,4 @@ const OrganizationDeleteButton = ({ orgId }: OrganizationDeleteButtonProps) => {
   );
 };
 
-export default OrganizationDeleteButton;
+export default MembershipDeleteButton;

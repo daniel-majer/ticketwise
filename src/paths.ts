@@ -17,12 +17,15 @@ const organizationCreatePath = () => "/organizations/create";
 const onboardingPath = () => "/onboarding";
 const selectActiveOrganizationPath = () =>
   "/onboarding/select-active-organization";
+const membershipsPath = (orgId: string) =>
+  `/organizations/${orgId}/memberships`;
 
 export {
   accPasswordPath,
   accProfilePath,
   emailVerificationPath,
   home,
+  membershipsPath,
   onboardingPath,
   organizationCreatePath,
   organizationsPath,

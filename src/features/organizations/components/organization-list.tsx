@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { format } from "date-fns";
 import {
   LucideArrowLeftRight,
@@ -20,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { membershipsPath } from "@/paths";
 
 type OrganizationListProps = {
   limitedAccess?: boolean;
@@ -62,8 +65,10 @@ const OrganizationList = async ({ limitedAccess }: OrganizationListProps) => {
             />
           );
           const detailButton = (
-            <Button size="icon" variant="outline">
-              <LucideArrowUpRightFromSquare size={16} />
+            <Button size="icon" variant="outline" asChild>
+              <Link href={membershipsPath(org.id)} className="cursor-pointer">
+                <LucideArrowUpRightFromSquare size={16} />
+              </Link>
             </Button>
           );
           const editButton = (
