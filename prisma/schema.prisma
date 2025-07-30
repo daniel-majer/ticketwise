@@ -18,15 +18,21 @@ model Organization {
 
 model Membership {
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String
-  user           User         @relation(fields: [userId], references: [id])
-  joinedAt       DateTime     @default(now())
+  user           User           @relation(fields: [userId], references: [id])
+  joinedAt       DateTime       @default(now())
   isActive       Boolean
+  membershipRole MembershipRole @default(MEMBER)
 
   @@id(name: "membershipId", [organizationId, userId])
   @@index([userId])
   @@index([organizationId])
+}
+
+enum MembershipRole {
+  MEMBER
+  ADMIN
 }
 
 model User {

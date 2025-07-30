@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import MembershipDeleteButton from "@/features/membership/components/membership-delete-button";
 import { membershipsPath } from "@/paths";
 
 type OrganizationListProps = {
@@ -41,12 +42,14 @@ const OrganizationList = async ({ limitedAccess }: OrganizationListProps) => {
           <TableHead>Name</TableHead>
           <TableHead>Joined At</TableHead>
           <TableHead>Members</TableHead>
+          <TableHead>Roles</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
         {organizations.map((org) => {
           const isActive = org.membershipByUser.isActive;
+          const isAdmin = org.membershipByUser.membershipRole === "ADMIN";
 
           const switchButton = (
             <OrganizationSwitchButton
@@ -78,12 +81,24 @@ const OrganizationList = async ({ limitedAccess }: OrganizationListProps) => {
           );
           const deleteButton = <OrganizationDeleteButton orgId={org.id} />;
 
+          const leaveButton = (
+            <MembershipDeleteButton
+              orgId={org.id}
+              userId={org.membershipByUser.userId}
+            />
+          );
+
+          const placeholder = (
+            <Button disabled size="icon" className="disabled:opacity-0" />
+          );
+
           const buttons = (
             <>
               {switchButton}
-              {limitedAccess ? null : detailButton}
-              {limitedAccess ? null : editButton}
-              {limitedAccess ? null : deleteButton}
+              {limitedAccess ? null : isAdmin ? detailButton : placeholder}
+              {limitedAccess ? null : isAdmin ? editButton : placeholder}
+              {limitedAccess ? null : leaveButton}
+              {limitedAccess ? null : isAdmin ? deleteButton : placeholder}
             </>
           );
 
@@ -95,6 +110,7 @@ const OrganizationList = async ({ limitedAccess }: OrganizationListProps) => {
                 {format(org.membershipByUser.joinedAt, "dd/MM/yyyy, HH:mm")}
               </TableCell>
               <TableCell>{org._count.memberships}</TableCell>
+              <TableCell>{org.membershipByUser.membershipRole}</TableCell>
               <TableCell className="flex justify-end gap-x-2">
                 {buttons}
               </TableCell>

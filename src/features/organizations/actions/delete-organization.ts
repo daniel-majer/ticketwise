@@ -3,11 +3,11 @@
 import { getOrganizations } from "./get-organizations";
 
 import { toActionState, toErrorState } from "@/components/form/utils";
-import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-redirect";
+import { getAdminOrRedirect } from "@/features/membership/queries/get-admin-or-redirect";
 import { prisma } from "@/lib/prisma";
 
 export const deleteOrganization = async (orgId: string) => {
-  await getAuthOrRedirect();
+  await getAdminOrRedirect(orgId);
   try {
     const organizations = await getOrganizations();
 
