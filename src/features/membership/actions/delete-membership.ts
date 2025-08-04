@@ -51,7 +51,7 @@ export const membershipOrganization = async (orgId: string, userId: string) => {
       "You can only delete memberships as an admin",
     );
 
-  //okay everything checked
+  //okay everything checked 
   await prisma.membership.delete({
     where: {
       membershipId: {
