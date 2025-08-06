@@ -46,7 +46,7 @@ The codebase follows a feature-based architecture under `src/features/`:
 ### Key Architectural Patterns
 - **Server Actions**: All mutations use Next.js server actions in `actions/` directories
 - **Database Queries**: Reusable queries in `queries/` directories using Prisma
-- **Component Co-location**: Components are grouped with their related features
+- **Component Co-location**: Components grouped with their related features
 - **Path Management**: Centralized route definitions in `src/paths.ts`
 - **Form Handling**: Custom form utilities in `src/components/form/` with Zod validation
 
