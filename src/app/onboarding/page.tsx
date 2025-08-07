@@ -7,7 +7,7 @@ const Onboarding = () => {
   return (
     <>
       <CardWrapper
-        className="mx-auto mb-4 flex w-full max-w-[480px] rounded-md"
+        className="mx-auto mb-4 flex w-full max-w-[480px] rounded-md "
         title="Create Organization"
         desc="Create an organization to get started"
         content={<OnboardingForm />}
