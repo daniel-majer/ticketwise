@@ -1,4 +1,4 @@
-// /app/api/auth/user/route.ts 
+// /app/api/auth/user/route.ts
 import { NextResponse } from "next/server";
 
 import { getAuth } from "@/features/auth/queries/cookie";
