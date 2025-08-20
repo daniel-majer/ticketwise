@@ -58,7 +58,7 @@ const seed = async () => {
   await prisma.membership.createMany({
     data: [
       {
-        //for debugging purposes
+        //for debugging purposes 
         //only one user is added to the organization
         organizationId: dbOrganizations.id,
         userId: dbUsers[0].id,
