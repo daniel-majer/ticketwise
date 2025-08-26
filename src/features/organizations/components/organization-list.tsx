@@ -7,7 +7,7 @@ import {
   LucidePen,
 } from "lucide-react";
 
-import { getOrganizations } from "../actions/get-organizations";
+import { getOrganizations } from "../queries/get-organizations";
 
 import OrganizationDeleteButton from "./organization-delete-button";
 import OrganizationSwitchButton from "./organization-switch-button";

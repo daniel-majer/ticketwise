@@ -1,6 +1,6 @@
 "use server";
 
-import { getOrganizations } from "./get-organizations";
+import { getOrganizations } from "../queries/get-organizations";
 
 import { toActionState, toErrorState } from "@/components/form/utils";
 import { getAdminOrRedirect } from "@/features/membership/queries/get-admin-or-redirect";

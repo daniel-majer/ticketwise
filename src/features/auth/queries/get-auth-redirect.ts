@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { getAuth } from "./cookie";
 
-import { getOrganizations } from "@/features/organizations/actions/get-organizations";
+import { getOrganizations } from "@/features/organizations/queries/get-organizations";
 import {
   emailVerificationPath,
   onboardingPath,

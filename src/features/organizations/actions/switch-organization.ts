@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { getOrganizations } from "./get-organizations";
+import { getOrganizations } from "../queries/get-organizations";
 
 import { toActionState, toErrorState } from "@/components/form/utils";
 import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-redirect";

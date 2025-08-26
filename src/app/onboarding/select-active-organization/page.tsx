@@ -7,8 +7,8 @@ import { LucidePlus } from "lucide-react";
 import Loading from "@/app/loading";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
-import { getOrganizations } from "@/features/organizations/actions/get-organizations";
 import OrganizationList from "@/features/organizations/components/organization-list";
+import { getOrganizations } from "@/features/organizations/queries/get-organizations";
 import { onboardingPath, organizationsPath } from "@/paths";
 
 const SelectActiveOrganizationPage = async () => {
