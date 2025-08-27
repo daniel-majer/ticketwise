@@ -4,6 +4,7 @@ import { LucideBan, LucideCheck } from "lucide-react";
 import { getMemberships } from "../queries/get-memberships";
 
 import MembershipDeleteButton from "./membership-delete-button";
+import MembershipMoreMenu from "./membership-more-menu";
 
 import {
   Table,
@@ -35,7 +36,17 @@ const MembershipList = async ({ orgId }: MembershipListProps) => {
       </TableHeader>
       <TableBody>
         {memberships.map((membership) => {
-          const buttons = (
+          const membershipMoreMenu = (
+            <>
+              <MembershipMoreMenu
+                userId={membership.userId}
+                organizationId={membership.organizationId}
+                membershipRole={membership.membershipRole}
+              />
+            </>
+          );
+
+          const deleteButton = (
             <>
               <MembershipDeleteButton
                 orgId={orgId}
@@ -43,6 +54,14 @@ const MembershipList = async ({ orgId }: MembershipListProps) => {
               />
             </>
           );
+
+          const buttons = (
+            <>
+              {membershipMoreMenu}
+              {deleteButton}
+            </>
+          );
+
           return (
             <TableRow key={membership.userId}>
               <TableCell>{membership.user.username}</TableCell>

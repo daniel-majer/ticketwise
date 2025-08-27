@@ -58,18 +58,18 @@ const seed = async () => {
   await prisma.membership.createMany({
     data: [
       {
-        //for debugging purposes 
+        //for debugging purposes
         //only one user is added to the organization
         organizationId: dbOrganizations.id,
         userId: dbUsers[0].id,
         isActive: true,
-        membershipRole: "MEMBER",
+        membershipRole: "ADMIN",
       },
       {
         organizationId: dbOrganizations.id,
         userId: dbUsers[1].id,
         isActive: false,
-        membershipRole: "ADMIN",
+        membershipRole: "MEMBER",
       },
     ],
   });
@@ -78,6 +78,7 @@ const seed = async () => {
     data: tickets.map((ticket) => ({
       ...ticket,
       userId: dbUsers[0].id,
+      organizationId: dbOrganizations.id,
     })),
   });
 
