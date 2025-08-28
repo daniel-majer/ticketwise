@@ -3,6 +3,7 @@ import { ParsedSearchParams } from "../search-params";
 import { getAuth } from "@/features/auth/queries/cookie";
 import { isOwner } from "@/features/auth/utils/isOwner";
 import { getActiveOrganization } from "@/features/organizations/queries/get-active-organization";
+import { getOrganizations } from "@/features/organizations/queries/get-organizations";
 import { prisma } from "@/lib/prisma";
 
 export const getTickets = async (
@@ -47,9 +48,24 @@ export const getTickets = async (
     }),
     prisma.ticket.count({ where }),
   ]);
+
+  const organizationsByUser = await getOrganizations();
+
   return {
     list: tickets.map((ticket) => {
-      return { ...ticket, isTicketOwner: isOwner(user, ticket) };
+      const organization = organizationsByUser.find(
+        (org) => org.id === ticket.organizationId,
+      );
+
+      return {
+        ...ticket,
+        isTicketOwner: isOwner(user, ticket),
+        permissions: {
+          canDeleteTicket:
+            isOwner(user, ticket) &&
+            !!organization?.membershipByUser?.canDeleteTickets,
+        },
+      };
     }),
     metaData: { count, hasNextPage: count > skip + take },
   };

@@ -74,8 +74,7 @@ export const TicketCard = ({
 
   const moreButton = ticket.isTicketOwner ? (
     <TicketDropdownMenu
-      value={status}
-      id={id}
+      ticket={ticket}
       trigger={
         <Button variant="outline" size="icon" className="cursor-pointer">
           <LucideMoreVertical />

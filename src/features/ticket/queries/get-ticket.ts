@@ -1,3 +1,5 @@
+import { getTicketPermission } from "../permissions/get-ticket-permission";
+
 import { getAuth } from "@/features/auth/queries/cookie";
 import { isOwner } from "@/features/auth/utils/isOwner";
 import { prisma } from "@/lib/prisma";
@@ -20,5 +22,17 @@ export const getTicket = async (id: string) => {
 
   if (!ticket) return null;
 
-  return { ...ticket, isTicketOwner: isOwner(user, ticket) };
+  const ticketPermission = await getTicketPermission({
+    organizationId: ticket.organizationId,
+    userId: user?.id,
+  });
+
+  return {
+    ...ticket,
+    isTicketOwner: isOwner(user, ticket),
+    permissions: {
+      canDeleteTicket:
+        isOwner(user, ticket) && ticketPermission.canDeleteTicket,
+    },
+  };
 };
