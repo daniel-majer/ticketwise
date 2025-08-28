@@ -12,6 +12,7 @@
     "lint-fix": "next lint --fix",
     "postinstall": "prisma generate",
     "seed": "tsx prisma/seed.ts",
+    "studio": "prisma studio",
     "email": "email dev --dir src/emails"
   },
   "dependencies": {

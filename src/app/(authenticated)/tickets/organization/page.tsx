@@ -1,26 +1,26 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
-import { SearchParams } from "nuqs/server";
+import { SearchParams } from "nuqs";
 
-import Loading from "./loading";
+import Loading from "../loading";
 
 import CardWrapper from "@/components/card-custom";
 import { Heading } from "@/components/heading";
 import TicketList from "@/components/ticket-list";
-import { getAuth } from "@/features/auth/queries/cookie";
 import { CreateUpdateForm } from "@/features/ticket/components/create-update-form";
 import { searchParamsCache } from "@/features/ticket/search-params";
 
-type TicketsProps = {
+type OurTicketsProps = {
   searchParams: Promise<SearchParams>;
 };
 
-const Tickets = async ({ searchParams }: TicketsProps) => {
-  const { user } = await getAuth();
-
+const OurTicketsPage = async ({ searchParams }: OurTicketsProps) => {
   return (
     <>
-      <Heading title="My tickets" description="All your tickets at one place" />
+      <Heading
+        title="Our tickets"
+        description="All tickets related to my organization"
+      />
 
       <CardWrapper
         className="mx-auto mb-8 flex w-full max-w-[480px] rounded-md"
@@ -31,8 +31,7 @@ const Tickets = async ({ searchParams }: TicketsProps) => {
 
       <Suspense fallback={<Loading />}>
         <TicketList
-          userId={user?.id}
-          
+          byOrganization
           searchParams={searchParamsCache.parse(await searchParams)}
         />
       </Suspense>
@@ -40,4 +39,4 @@ const Tickets = async ({ searchParams }: TicketsProps) => {
   );
 };
 
-export default Tickets;
+export default OurTicketsPage;

@@ -1,6 +1,7 @@
 const home = () => "/";
 const tickets = () => "/tickets";
 const ticketById = (id: string) => `/tickets/${id}`;
+const ticketsByOrganizationPath = () => "/tickets/organization";
 const ticketEdit = (id: string) => `/tickets/${id}/edit`;
 
 const signInPath = () => "/sign-in";
@@ -37,4 +38,5 @@ export {
   ticketById,
   ticketEdit,
   tickets,
+  ticketsByOrganizationPath,
 };
