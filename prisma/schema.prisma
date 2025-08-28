@@ -48,7 +48,7 @@ model User {
   sessions                Session[]
   tickets                 Ticket[]
   comments                Comment[]
-  tokenPassordSession     PasswordSession[]
+  tokenPasswordSession     PasswordSession[]
   emailVerificationTokens EmailVerificationToken[]
   memberships             Membership[]
 }
