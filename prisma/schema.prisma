@@ -18,13 +18,14 @@ model Organization {
 }
 
 model Membership {
-  organizationId String
-  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId         String
-  user           User           @relation(fields: [userId], references: [id])
-  joinedAt       DateTime       @default(now())
-  isActive       Boolean
-  membershipRole MembershipRole @default(MEMBER)
+  organizationId   String
+  organization     Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User           @relation(fields: [userId], references: [id])
+  joinedAt         DateTime       @default(now())
+  isActive         Boolean
+  membershipRole   MembershipRole @default(MEMBER)
+  canDeleteTickets Boolean        @default(true)
 
   @@id(name: "membershipId", [organizationId, userId])
   @@index([userId])
@@ -48,7 +49,7 @@ model User {
   sessions                Session[]
   tickets                 Ticket[]
   comments                Comment[]
-  tokenPasswordSession     PasswordSession[]
+  tokenPasswordSession    PasswordSession[]
   emailVerificationTokens EmailVerificationToken[]
   memberships             Membership[]
 }

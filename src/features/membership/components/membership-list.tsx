@@ -5,6 +5,7 @@ import { getMemberships } from "../queries/get-memberships";
 
 import MembershipDeleteButton from "./membership-delete-button";
 import MembershipMoreMenu from "./membership-more-menu";
+import PermissionToggle from "./permission-toggle";
 
 import {
   Table,
@@ -31,6 +32,7 @@ const MembershipList = async ({ orgId }: MembershipListProps) => {
           <TableHead>Joined At</TableHead>
           <TableHead>Verified Email</TableHead>
           <TableHead>Roles</TableHead>
+          <TableHead>Can Delete Tickets?</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
@@ -77,6 +79,14 @@ const MembershipList = async ({ orgId }: MembershipListProps) => {
                 )}
               </TableCell>
               <TableCell>{membership.membershipRole}</TableCell>
+              <TableCell>
+                <PermissionToggle
+                  userId={membership.userId}
+                  organizationId={membership.organizationId}
+                  permissionKey="canDeleteTickets"
+                  permissionValue={membership.canDeleteTickets}
+                />
+              </TableCell>
               <TableCell className="flex justify-end gap-x-2">
                 {buttons}
               </TableCell>

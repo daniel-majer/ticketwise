@@ -3,6 +3,7 @@
 import React, { cloneElement } from "react";
 import { useFormStatus } from "react-dom";
 
+import clsx from "clsx";
 import { LucideLoaderCircle } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -16,17 +17,20 @@ type SubmitButtonProps = {
     | "default"
     | "destructive"
     | "outline"
-    | "ghost"
-    | null
-    | undefined;
+    | "ghost";
+  size?: "icon" | "sm" | "lg" | "default";
 };
-const SubmitButton = ({ label, icon, variant }: SubmitButtonProps) => {
+
+const SubmitButton = ({ label, icon, variant, size }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
   return (
     <Button
+      size={size}
       variant={variant}
       type="submit"
-      className="w-full cursor-pointer text-white"
+      className={clsx("cursor-pointer text-white", {
+        "w-full": !size,
+      })}
       disabled={pending}
     >
       {pending ? (
