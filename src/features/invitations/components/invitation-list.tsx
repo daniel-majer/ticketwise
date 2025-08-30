@@ -1,10 +1,11 @@
 import { format } from "date-fns";
-import { LucideTrash, LucideTriangleAlert } from "lucide-react";
+import { LucideTriangleAlert } from "lucide-react";
 
 import { getInvitations } from "../queries/get-invitation";
 
+import InvitationDeleteButton from "./invitation-delete-button";
+
 import Placeholder from "@/components/placeholder";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -39,13 +40,10 @@ const InvitationList = async ({ orgId }: InvitationListProps) => {
         {invitations.map((invitation) => {
           const deleteButton = (
             <>
-              <Button
-                variant="destructive"
-                size="icon"
-                className="cursor-pointer"
-              >
-                <LucideTrash className="h-4 w-4" />
-              </Button>
+              <InvitationDeleteButton
+                email={invitation.email}
+                organizationId={invitation.organizationId}
+              />
             </>
           );
 
