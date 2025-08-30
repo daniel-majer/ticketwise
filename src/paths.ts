@@ -20,12 +20,17 @@ const selectActiveOrganizationPath = () =>
   "/onboarding/select-active-organization";
 const membershipsPath = (orgId: string) =>
   `/organizations/${orgId}/memberships`;
+const invitationsPath = (orgId: string) =>
+  `/organizations/${orgId}/invitations`;
+const emailInvitationLink = () => "/email-invitation";
 
 export {
   accPasswordPath,
   accProfilePath,
+  emailInvitationLink,
   emailVerificationPath,
   home,
+  invitationsPath,
   membershipsPath,
   onboardingPath,
   organizationCreatePath,
