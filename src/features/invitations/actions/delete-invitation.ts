@@ -1,3 +1,5 @@
+"use server";
+
 import { toActionState } from "@/components/form/utils";
 import { getAdminOrRedirect } from "@/features/membership/queries/get-admin-or-redirect";
 import { prisma } from "@/lib/prisma";
